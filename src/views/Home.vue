@@ -1,18 +1,47 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>current email is: {{ user }}</h1>
+    <button @click="logout">Logout</button>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import firebase from "firebase";
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
+  name: "home",
+  data() {
+    return {
+      user: ""
+    };
+  },
+  methods: {
+    checkUser: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.user = user.email;
+        }
+      });
+    },
+    logout: function() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          console.log("logout success");
+        })
+        .then(() => {
+          this.user = "nothing";
+        })
+        .catch(error => {
+          console.error("logout unsuccessful");
+        });
+    }
+  },
+  mounted() {
+    this.user = "nothing";
+    this.checkUser();
   }
-}
+};
 </script>
