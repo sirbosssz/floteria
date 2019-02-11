@@ -2,8 +2,8 @@
   <div id="app">
     <div id="nav">
       <!-- navbar area -->
-      <router-link to="/">หน้าแรก</router-link> |
-      <router-link to="/lab">ห้องทดลอง</router-link> | 
+      <router-link to="/">หน้าแรก</router-link>
+      <router-link to="/lab">ห้องทดลอง</router-link>
       <router-link to="/lessons">บทเรียน</router-link>
     </div>
     <router-view/>
@@ -11,32 +11,41 @@
 </template>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url(./assets/font/font.scss);
+body{
+  background: #f9f9f9;
 }
 #nav {
-  padding: 30px;
+  background: #fff;
+  padding: 24px;
+  max-height: 80px;
   a {
-    font-weight: bold;
+    font-size: 16pt;
+    font-weight: normal;
     color: #2c3e50;
+    padding-left: .5em;
+    padding-right: .5em;
     &.router-link-exact-active {
-      color: #42b983;
+      color: #d12c00;
     }
   }
+  a:hover{
+    color: #ef5a37;
+  }
+}
+#app {
+  text-align: center;
+  color: #2c3e50;
 }
 </style>
 
 <script>
 export default {
-  name: 'App',
+  name: "App",
   data() {
     return {
-      user: {},
-    }
+      user: {}
+    };
   }
-}
+};
 </script>
