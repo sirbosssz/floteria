@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> | 
-      <router-link to="/login">Login</router-link>
+      <!-- navbar area -->
+      <router-link to="/">หน้าแรก</router-link> |
+      <router-link to="/lab">ห้องทดลอง</router-link> | 
+      <router-link to="/lessons">บทเรียน</router-link>
     </div>
     <router-view/>
   </div>
@@ -28,3 +29,14 @@
   }
 }
 </style>
+
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      user: {},
+    }
+  }
+}
+</script>
