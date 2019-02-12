@@ -39,8 +39,13 @@ export default new Router({
      component: () => import('./pages/LessonList.vue')
    },
    {
-     path: '/lessons/:name',
-     name: 'Lesson Page',
+     path: '/lessons/:chapter',
+     name: 'Lesson Chapter',
+     component: () => import('./pages/LessonChapter.vue')
+   },
+   {
+     path: '/lessons/:chapter/:page',
+     name: 'Lesson Chapter Page',
      component: () => import('./pages/LessonPage.vue')
    }
   ]

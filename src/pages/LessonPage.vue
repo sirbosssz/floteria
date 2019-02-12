@@ -1,5 +1,5 @@
 <template>
-    <h1 id="lesson-test">Lesson : {{$route.params.name}}</h1>
+    <h1>Lesson : {{$route.params.chapter}} / {{$route.params.page}}</h1>
 </template>
 
 <script>
