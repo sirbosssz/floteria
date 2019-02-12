@@ -1,10 +1,10 @@
 <template>
-    <h1>Lesson : {{$route.params.chapter}} / {{$route.params.page}}</h1>
+    <h1>Lesson : {{$route.params.chapter}}</h1>
 </template>
 
 <script>
 export default {
-    name: 'LessonPage',
+    name: 'LessonChapter',
     data() {
         return{
             lesson: ''
