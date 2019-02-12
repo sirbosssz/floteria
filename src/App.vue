@@ -11,8 +11,9 @@
 </template>
 
 <style lang="scss">
-@import url(./assets/font/font.scss);
-body{
+@import "./assets/font/font";
+@import "./assets/colors";
+body, html{
   background: #f9f9f9;
 }
 #nav {
@@ -35,7 +36,7 @@ body{
 }
 #app {
   text-align: center;
-  color: #2c3e50;
+  // color: #2c3e50;
 }
 </style>
 

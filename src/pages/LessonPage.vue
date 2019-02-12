@@ -1,5 +1,5 @@
 <template>
-    <h1>Lesson : {{$route.params.name}}</h1>
+    <h1 id="lesson-test">Lesson : {{$route.params.name}}</h1>
 </template>
 
 <script>
@@ -12,3 +12,12 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../assets/colors';
+
+#lesson-test{
+    color: $blue;
+}
+</style>
+
