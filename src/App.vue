@@ -14,8 +14,8 @@
 </template>
 
 <style lang="scss">
-@import "./assets/font/font";
-@import "./assets/colors";
+@import "@/assets/font/font.scss";
+@import "@/assets/colors.scss";
 
 body,
 html {

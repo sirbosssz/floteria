@@ -1,15 +1,15 @@
 @font-face {
-    font-family: Quark;
-    src: "Quark-Light.otf";
+    font-family: 'Quark-Font';
+    src: url('~@/assets/font/Quark-Light.otf');
     font-weight: normal;
 }
 
 @font-face{
-    font-family: Quark;
-    src: "Quark-Bold.otf";
+    font-family: 'Quark-Font';
+    src: url("~@/assets/font/Quark-Bold.otf");
     font-weight: bold;
 }
 
 * {
-    font-family: Quark
+    font-family: 'Quark-Font'
 }
