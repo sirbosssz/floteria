@@ -1,29 +1,68 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <nav id="nav">
+      <!-- navbar area -->
+      <div class="navigator">
+        <!-- navigator link -->
+        <router-link to="/">หน้าแรก</router-link>
+        <router-link to="/lab">ห้องทดลอง</router-link>
+        <router-link to="/lessons">บทเรียน</router-link>
+      </div>
+    </nav>
     <router-view/>
   </div>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import "@/assets/font/font.scss";
+@import "@/assets/colors.scss";
+
+body,
+html {
+  background: #f9f9f9;
 }
 #nav {
-  padding: 30px;
+  background: #fff;
+  padding: 8px;
+  min-height: 40px;
   a {
-    font-weight: bold;
+    font-size: 14pt;
+    font-weight: normal;
     color: #2c3e50;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
     &.router-link-exact-active {
-      color: #42b983;
+      color: #d12c00;
+    }
+  }
+  a:hover {
+    color: #ef5a37;
+  }
+}
+#app {
+  text-align: center;
+  min-height: 100vh;
+  // color: #2c3e50;
+}
+
+@media (min-width: 1408px) {
+  #nav {
+    padding: 14px;
+    min-height: 60px;
+    a {
+      font-size: 16pt;
     }
   }
 }
 </style>
+
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      user: {}
+    };
+  }
+};
+</script>
