@@ -7,7 +7,8 @@ export default {
     name: 'LessonPage',
     data() {
         return{
-            lesson: ''
+            lesson: this.$route.params.chapter,
+            page: this.$route.params.page
         }
     },
 }
