@@ -3,9 +3,8 @@
 </template>
 
 <script>
-import { Application } from "pixi.js";
-import DrawArea from "@/flowchart-app/DrawArea";
-import BlocksSetUI from '@/flowchart-app/UI/BlocksSetUI';
+import { Application, Graphics } from "pixi.js";
+import Viewport from "pixi-viewport";
 
 export default {
   name: "FlowApp",
@@ -20,14 +19,26 @@ export default {
 
     const { width, height } = this.getCanvasSize();
 
-    // draw area -> Viewport
-    let viewWidth = width,
-      viewHeight = height;
-    this.drawArea = new DrawArea({
-      boxWidth: width,
-      boxHeight: height
+    // workspace -> Viewport
+    this.workspace = new Viewport({
+      screenWidth: width,
+      screenHeight: height,
+      worldWidth: width + 200,
+      worldHeight: height + 200,
+
+      interaction: this.app.renderer.interaction
     });
-    this.app.stage.addChild(this.drawArea);
+
+    this.app.stage.addChild(this.workspace);
+    this.workspace
+      .drag()
+      .pinch()
+      .decelerate();
+
+        // temp: workspace map -> generate + expand map
+    this.workspaceMap = this.workspace.addChild(new Graphics())
+    this.workspaceMap.beginFill(0xEDEDED).drawRect(0, 0, (width + 200), (height + 200)).endFill()
+    this.workspace.bounce()
 
     // output area -> Container
 
@@ -56,11 +67,8 @@ export default {
       // resize renderer
       this.app.renderer.resize(width, height);
 
-      //resize draw area
-      this.drawArea.resize({
-        boxWidth: width,
-        boxHeight: height
-      });
+      //resize workspace
+      this.workspace.resize(width, height)
     }
   }
 };
