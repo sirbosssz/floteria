@@ -5,12 +5,14 @@ import Block from '@/flowchart-app/Block'
 
 export default function workspaceMap(options) {
   const map = new Scrollbox(options)
+
   let mapSize = 4096
   // temp: workspace map -> generate + expand map
   map.background = map.content.addChild(new Graphics())
   map.background.beginFill(0xEDEDED).drawRect(0, 0, mapSize, mapSize).endFill()
-  console.log(map.children[0].children[0])
-  map.children[0].children[0].interactive = true
+  console.log(map.children[0].children)
+
+  let creatingLine = false
 
   map.drag = function (setting) {
     map.dragScroll = setting
@@ -29,17 +31,37 @@ export default function workspaceMap(options) {
       .on('pointerupoutside', stopBlockDrag)
       .on('pointermove', startBlockDrag)
 
+    if (type !== 'decision' || type !== 'loop') {
+      block.on()
+    }
+
+    function createLine() {
+      console.log('created line')
+    }
+
     function toggleSelectMode(event) {
+      map.children[0].children.forEach(element => {
+        if (element.type) {
+          element.closeClickMode()
+          element.mode = null
+        }
+      });
+
       this.data = event.data;
-      block.mode = block.mode !== 'click' ? 'click' : null;
+      if (block.mode === 'click') {
+        block.mode = null
+        block.closeClickMode()
+      } else {
+        block.mode = 'click'
+        block.openClickMode()
+      }
       this.dragging = this.dragging === true ? false : true;
-      block.toggleClickMode()
-      console.log(['clicked block', block.mode])
+      // block.toggleClickMode()}
+
     }
 
     function closeClickMode() {
-      console.log('clicked map')
-      if (block.mode === 'click'){
+      if (block.mode === 'click') {
         block.closeClickMode()
         block.mode = null
       }
