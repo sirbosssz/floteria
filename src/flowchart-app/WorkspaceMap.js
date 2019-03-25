@@ -9,14 +9,19 @@ export default function workspaceMap(options) {
   // temp: workspace map -> generate + expand map
   map.background = map.content.addChild(new Graphics())
   map.background.beginFill(0xEDEDED).drawRect(0, 0, mapSize, mapSize).endFill()
-  console.log(map.children[0].children[0])
-  map.children[0].children[0].interactive = true
+  console.log(map.children[0].children)
+
+  let focus = null
 
   map.drag = function (setting) {
     map.dragScroll = setting
   }
 
   map.addBlock = function (type) {
+    // NEW
+    
+    
+    // OLD
     let block = new Block(type, { x: 200, y: 100 })
     map.content.addChild(block)
 
@@ -31,18 +36,13 @@ export default function workspaceMap(options) {
 
     function toggleSelectMode(event) {
       this.data = event.data;
+      if (focus === block) {
+
+      }
       block.mode = block.mode !== 'click' ? 'click' : null;
       this.dragging = this.dragging === true ? false : true;
       block.toggleClickMode()
       console.log(['clicked block', block.mode])
-    }
-
-    function closeClickMode() {
-      console.log('clicked map')
-      if (block.mode === 'click'){
-        block.closeClickMode()
-        block.mode = null
-      }
     }
 
     function startBlockDrag() {

@@ -1,19 +1,19 @@
 <template>
   <div class="labpage">
     <div id="menu-blocks">
-      <div class="menu-button" @click="addBlock('terminal')">
+      <div class="menu-button" @click="addBlock('operations')">
         <img
-          srcset="/assets/b-terminal.svg"
-          src="/assets/b-terminal.png"
+          srcset="/assets/b-operations.svg"
+          src="/assets/b-operations.png"
           width="100%"
           height="100%"
           alt
         >
       </div>
-      <div class="menu-button" @click="addBlock('operations')">
+      <div class="menu-button" @click="addBlock('io')">
         <img
-          srcset="/assets/b-operations.svg"
-          src="/assets/b-operations.png"
+          srcset="/assets/b-io.svg"
+          src="/assets/b-io.png"
           width="100%"
           height="100%"
           alt
@@ -107,9 +107,9 @@ export default {
 
     this.refreshCanvasSize();
     window.addEventListener("resize", this.refreshCanvasSize);
-    // blocks set UI -> Container
-    // this.blocksSetUI = new BlocksSetUI(30, 50);
-    // this.app.stage.addChild(this.blocksSetUI);
+    // blocks
+
+    this.blocks = []
   },
 
   beforeDestroy() {
@@ -118,8 +118,19 @@ export default {
 
   methods: {
     addBlock(type) {
-      console.log(`insert a ${type} block in Workspace`);
-      let block = this.map.addBlock(type)
+      let id = this.blocks.length
+      let block = new Block(type, {id: id}, { x: 200, y: 100 })
+      this.map.addChild(block)
+      this.blocks.push(block)
+
+      console.log([`insert a/an ${type} block in Workspace`, this.blocks])
+    },
+
+    delBlock(id) {
+      this.map.removeChild(this.blocks[id])
+      this.blocks[id] = null
+
+      console.log(`deleted block id = ${id}`);
     },
 
     getCanvasSize() {
