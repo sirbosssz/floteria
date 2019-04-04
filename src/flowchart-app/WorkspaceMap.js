@@ -5,11 +5,11 @@ import Block from '@/flowchart-app/Block'
 
 export default function workspaceMap(options) {
   const map = new Scrollbox(options)
-  let mapSize = 4096
+  let mapSize = 3000
   // temp: workspace map -> generate + expand map
   map.background = map.content.addChild(new Graphics())
   map.background.beginFill(0xEDEDED).drawRect(0, 0, mapSize, mapSize).endFill()
-  console.log(map.children[0].children)
+  console.log(map)
 
   let focus = null
 

@@ -21,8 +21,8 @@ export default class Block extends Container {
     this.block = new Sprite(blockTexture);
     this.block.x = 0
     this.block.y = 0
-    this.interactive = true;
-    this.buttonMode = true;
+    this.block.interactive = true;
+    this.block.buttonMode = true;
 
     this.addChild(this.block)
     // connectingPoint

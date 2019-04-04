@@ -1,40 +1,21 @@
-import { Application } from "pixi.js";
-import WorkspaceMap from '@/flowchart-app/WorkspaceMap'
+import Scrollbox from 'pixi-scrollbox';
 
-export default function workspace (options) {
-  const app =  new Application({
-    view: options.view,
-    backgroundColor: options.backgroundColor
-  });
-  const { width, height } = getCanvasSize(options.view);
+export default class Workspace extends Scrollbox {
+  constructor(options) {
+    super(options)
+    let mapSize = {
+      width: options.boxWidth,
+      height: options.boxHeight
+    }
+    // temp: workspace map -> generate + expand map
+    this.background = this.content.addChild(new Graphics())
+    this.background.beginFill(0xEDEDED).drawRect(0, 0, mapSize.width, mapSize.height).endFill()
+    console.log(this.children[0].children)
 
-  // workspace -> Viewport
-  const map = new WorkspaceMap({
-    boxWidth: width,
-    boxHeight: height,
-  });
-
-  app.stage.addChild(map);
-
-  function refreshCanvasSize(canvas, app, map) {
-    const { width, height } = getCanvasSize(canvas);
-    console.log(['resize', width, height])
-    // resize renderer
-    app.renderer.resize(width, height);
-    //resize map
-    map.resize({boxWidth: width, boxHeight:height})
+    let focus = null
   }
 
-  this.refreshCanvasSize(options.view, app, map);
-  window.addEventListener('resize', this.refreshCanvasSize(options.view, app, map))
-
-  // Add Block Menu
-  return app
-}
-
-function getCanvasSize(canvas) {
-  return {
-    width: canvas.offsetWidth,
-    height: canvas.offsetHeight
-  };
+  setDrag(flag) {
+    this.dragScroll = flag;
+  }
 }

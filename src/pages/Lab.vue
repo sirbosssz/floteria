@@ -11,13 +11,7 @@
         >
       </div>
       <div class="menu-button" @click="addBlock('io')">
-        <img
-          srcset="/assets/b-io.svg"
-          src="/assets/b-io.png"
-          width="100%"
-          height="100%"
-          alt
-        >
+        <img srcset="/assets/b-io.svg" src="/assets/b-io.png" width="100%" height="100%" alt>
       </div>
       <div class="menu-button" @click="addBlock('decision')">
         <img
@@ -83,7 +77,7 @@ canvas {
 <script>
 import { Application } from "pixi.js";
 import workspaceMap from "@/flowchart-app/WorkspaceMap";
-import Block from '@/flowchart-app/Block'
+import Block from "@/flowchart-app/Block";
 
 export default {
   name: "Lab",
@@ -103,13 +97,13 @@ export default {
       boxHeight: height
     });
     this.app.stage.addChild(this.map);
-    this.map.drag(false)
+    this.map.drag(false);
 
     this.refreshCanvasSize();
     window.addEventListener("resize", this.refreshCanvasSize);
     // blocks
 
-    this.blocks = []
+    this.blocks = [];
   },
 
   beforeDestroy() {
@@ -118,17 +112,17 @@ export default {
 
   methods: {
     addBlock(type) {
-      let id = this.blocks.length
-      let block = new Block(type, {id: id}, { x: 200, y: 100 })
-      this.map.addChild(block)
-      this.blocks.push(block)
+      let id = this.blocks.length;
+      let block = new Block(type, { id: id }, { x: 200, y: 100 });
+      this.map.addChild(block);
+      this.blocks.push(block);
 
-      console.log([`insert a/an ${type} block in Workspace`, this.blocks])
+      console.log([`insert a/an ${type} block in Workspace`, this.blocks]);
     },
 
     delBlock(id) {
-      this.map.removeChild(this.blocks[id])
-      this.blocks[id] = null
+      this.map.removeChild(this.blocks[id]);
+      this.blocks[id] = null;
 
       console.log(`deleted block id = ${id}`);
     },
