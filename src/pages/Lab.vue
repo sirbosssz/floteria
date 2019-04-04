@@ -78,6 +78,7 @@ canvas {
 import { Application } from "pixi.js";
 import workspaceMap from "@/flowchart-app/WorkspaceMap";
 import Block from "@/flowchart-app/Block";
+import BlockGroup from "@/flowchart-app/BlockGroup";
 
 export default {
   name: "Lab",
@@ -97,13 +98,23 @@ export default {
       boxHeight: height
     });
     this.app.stage.addChild(this.map);
-    this.map.drag(false);
 
     this.refreshCanvasSize();
     window.addEventListener("resize", this.refreshCanvasSize);
-    // blocks
 
+    // blocks
     this.blocks = [];
+    this.blockGroup = [];
+    
+    this.addBlock('start')
+    this.addBlock('stop')
+    // this.blockGroup[1].moveDown(100)
+
+    // insert stop into startgroup
+    this.map.content.removeChild(this.blockGroup[1])
+    this.blockGroup[0].insert(this.blockGroup[1])
+    this.blockGroup[0].main = true
+
   },
 
   beforeDestroy() {
@@ -112,10 +123,40 @@ export default {
 
   methods: {
     addBlock(type) {
+      // set some default parameter
+      const terminal = ['start', 'stop']
       let id = this.blocks.length;
-      let block = new Block(type, { id: id }, { x: 200, y: 100 });
-      this.map.addChild(block);
+      let flowData = { id: id }
+      let startLocation = {
+        x: 100,
+        y: 100
+      }
+      if (terminal.includes(type)) {
+        flowData = {
+          id: id,
+          type: type,
+          group: 'terminal'
+        };
+        startLocation = {
+          x: 250,
+          y: 75
+        }
+        type = 'terminal'
+      }
+
+      // add sprite
+      let block = new Block({
+        type: type,
+        flowData: flowData,
+        coords: startLocation,
+        map: this.map
+      });
+      let group = new BlockGroup(block)
+
+      // insert into map/container/list
+      this.map.content.addChild(group);
       this.blocks.push(block);
+      this.blockGroup.push(group);
 
       console.log([`insert a/an ${type} block in Workspace`, this.blocks]);
     },
@@ -123,6 +164,9 @@ export default {
     delBlock(id) {
       this.map.removeChild(this.blocks[id]);
       this.blocks[id] = null;
+
+      this.map.removeChild(this.blockGroup[id]);
+      this.blockGroup[id] = null;
 
       console.log(`deleted block id = ${id}`);
     },
