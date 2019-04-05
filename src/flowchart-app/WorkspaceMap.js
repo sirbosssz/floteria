@@ -1,8 +1,6 @@
 import { Graphics } from "pixi.js";
 import Scrollbox from "pixi-scrollbox";
 
-import Block from '@/flowchart-app/Block'
-
 export default function workspaceMap(options) {
   const map = new Scrollbox(options)
   let mapSize = 3000

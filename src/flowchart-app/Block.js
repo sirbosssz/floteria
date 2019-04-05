@@ -1,11 +1,11 @@
-import { Container, Texture, Sprite } from 'pixi.js';
+import { Container, Sprite, loader } from 'pixi.js';
 
 const texture = []
-texture.terminal = Texture.fromImage('/assets/b-terminal.svg'),
-  texture.operations = Texture.fromImage('/assets/b-operations.svg'),
-  texture.io = Texture.fromImage('/assets/b-io.svg'),
-  texture.decision = Texture.fromImage('/assets/b-decision.svg'),
-  texture.loop = Texture.fromImage('/assets/b-decision.svg')
+texture.terminal = '/assets/b-terminal.png',
+  texture.operations = '/assets/b-operations.png',
+  texture.io = '/assets/b-io.png',
+  texture.decision = '/assets/b-decision.png',
+  texture.loop = '/assets/b-decision.png'
 
 export default class Block extends Container {
   constructor({
@@ -24,7 +24,7 @@ export default class Block extends Container {
     this.click = false;
     // mainBlock
     const blockTexture = texture[type]
-    this.block = new Sprite(blockTexture);
+    this.block = new Sprite(loader.resources[blockTexture].texture);
     this.block.x = 0
     this.block.y = 0
     this.block.interactive = true;
@@ -36,6 +36,13 @@ export default class Block extends Container {
     this.pivot = {
       x: this.width / 2,
       y: this.height / 2
+    }
+
+    this.hitBox = {
+      left: this.x - (this.width / 2),
+      right: this.x + (this.width / 2),
+      top: this.y - (this.height / 2),
+      bottom: this.y + (this.height / 2)
     }
 
     // map
@@ -51,6 +58,7 @@ export default class Block extends Container {
     }
   }
 
+  // clickMode
   toggleClickMode() {
     this.click = this.click === true ? false : true
     if (this.click) {
@@ -69,6 +77,7 @@ export default class Block extends Container {
     this.block.alpha = 0.5
   }
 
+  // drag, clock events
   onClick(event) {
     this.data = event.data
     this.dragging = true
@@ -82,9 +91,31 @@ export default class Block extends Container {
   }
   onDrag() {
     if (this.dragging) {
+      if (this.parent.parent.parent) {
+        // console.log(this.parent.parent.parent)
+      }
       var newPosition = this.data.getLocalPosition(this.parent.map);
       this.parent.x = newPosition.x;
       this.parent.y = newPosition.y;
+
+      this.parent.hitBox = {
+        left: this.parent.x - (this.parent.width / 2),
+        right: this.parent.x + (this.parent.width / 2),
+        top: this.parent.y - (this.parent.height / 2),
+        bottom: this.parent.y + (this.parent.height / 2)
+      }
+
+      // checkCollide
+      this.collide = this.parent.checkCollision(this.parent);
+
+      //reserve space
+      if (this.collide) {
+        this.collide.ready(this.parent)
+      } else {
+        this.parent.map.blockGroup.forEach(group => {
+          group.cancelReady(this.parent)
+        })
+      }
     }
   }
   onDragEnd() {
@@ -92,6 +123,30 @@ export default class Block extends Container {
     this.dragging = false
     this.data = null
     this.parent.map.drag(true)
+
+    if (this.collide) {
+      this.collide.cancelReady(this.parent)
+      this.parent.x = this.collide.block.x
+      this.parent.y = this.collide.hitBox.bottom + (this.parent.height / 2)
+      this.parent.parent.insert(this.collide.next)
+      this.collide.insert(this.parent.parent)
+    }
+  }
+
+  // collision
+  checkCollision(block) {
+    const groups = block.map.blockGroup
+    let collide = null
+    groups.forEach(group => {
+      if (group !== block.parent && group.hitBox) {
+        if (block.hitBox.right >= group.hitBox.left && block.hitBox.left <= group.hitBox.right && block.hitBox.bottom >= group.hitBox.top && block.hitBox.top <= group.hitBox.bottom) {
+          collide = group;
+          return collide
+        }
+      }
+    });
+    // console.log(['hit', collide])
+    return collide
   }
 
 }
