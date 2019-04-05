@@ -1,15 +1,6 @@
 <template>
   <div class="labpage">
     <div id="menu-blocks">
-      <div class="menu-button" @click="addBlock('terminal')">
-        <img
-          srcset="/assets/b-terminal.svg"
-          src="/assets/b-terminal.png"
-          width="100%"
-          height="100%"
-          alt
-        >
-      </div>
       <div class="menu-button" @click="addBlock('operations')">
         <img
           srcset="/assets/b-operations.svg"
@@ -18,6 +9,9 @@
           height="100%"
           alt
         >
+      </div>
+      <div class="menu-button" @click="addBlock('io')">
+        <img srcset="/assets/b-io.svg" src="/assets/b-io.png" width="100%" height="100%" alt>
       </div>
       <div class="menu-button" @click="addBlock('decision')">
         <img
@@ -81,9 +75,10 @@ canvas {
 </style>
 
 <script>
-import { Application } from "pixi.js";
+import { Application, loader } from "pixi.js";
 import workspaceMap from "@/flowchart-app/WorkspaceMap";
-import Block from '@/flowchart-app/Block'
+import Block from "@/flowchart-app/Block";
+import BlockGroup from "@/flowchart-app/BlockGroup";
 
 export default {
   name: "Lab",
@@ -103,23 +98,90 @@ export default {
       boxHeight: height
     });
     this.app.stage.addChild(this.map);
-    this.map.drag(false)
 
     this.refreshCanvasSize();
     window.addEventListener("resize", this.refreshCanvasSize);
-    // blocks set UI -> Container
-    // this.blocksSetUI = new BlocksSetUI(30, 50);
-    // this.app.stage.addChild(this.blocksSetUI);
+
+    // blocks
+    this.blocks = [];
+    this.map.blockGroup = [];
+
+    loader.add([
+      '/assets/b-terminal.png',
+      '/assets/b-operations.png',
+      '/assets/b-io.png',
+      '/assets/b-decision.png',
+      '/assets/connector.png'
+    ]).load(this.setup)
+    
   },
 
   beforeDestroy() {
-    this.app.destroy();
+    console.log('close lab')
+    loader.reset()
+    this.app.stage.destroy(true);
+    this.app.destroy(true, true);
   },
 
   methods: {
+    setup() {
+      this.addBlock('start')
+      this.addBlock('stop')
+      // this.map.blockGroup[1].moveDown(100)
+
+      // insert stop into startgroup
+      this.map.content.removeChild(this.map.blockGroup[1])
+      this.map.blockGroup[0].insert(this.map.blockGroup[1])
+      this.map.blockGroup[0].main = true
+      this.map.blockGroup[0].update()
+    },
     addBlock(type) {
-      console.log(`insert a ${type} block in Workspace`);
-      let block = this.map.addBlock(type)
+      // set some default parameter
+      const terminal = ['start', 'stop']
+      let id = this.blocks.length;
+      let flowData = { id: id }
+      let startLocation = {
+        x: 100,
+        y: 100
+      }
+      if (terminal.includes(type)) {
+        flowData = {
+          id: id,
+          type: type,
+          group: 'terminal'
+        };
+        startLocation = {
+          x: 250,
+          y: 75
+        }
+        type = 'terminal'
+      }
+
+      // add sprite
+      let block = new Block({
+        type: type,
+        flowData: flowData,
+        coords: startLocation,
+        map: this.map
+      });
+      let group = new BlockGroup(block)
+
+      // insert into map/container/list
+      this.map.content.addChild(group);
+      this.blocks.push(block);
+      this.map.blockGroup.push(group);
+
+      // console.log([`insert a/an ${type} block in Workspace`, this.blocks]);
+    },
+
+    delBlock(id) {
+      this.map.removeChild(this.blocks[id]);
+      this.blocks[id] = null;
+
+      this.map.removeChild(this.map.blockGroup[id]);
+      this.map.blockGroup[id] = null;
+
+      console.log(`deleted block id = ${id}`);
     },
 
     getCanvasSize() {
