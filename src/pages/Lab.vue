@@ -138,13 +138,13 @@ export default {
       // set some default parameter
       const terminal = ['start', 'stop']
       let id = this.blocks.length;
-      let flowData = { id: id }
+      let flowdata = { id: id }
       let startLocation = {
         x: 100,
         y: 100
       }
       if (terminal.includes(type)) {
-        flowData = {
+        flowdata = {
           id: id,
           type: type,
           group: 'terminal'
@@ -159,7 +159,7 @@ export default {
       // add sprite
       let block = new Block({
         type: type,
-        flowData: flowData,
+        flowdata: flowdata,
         coords: startLocation,
         map: this.map
       });
