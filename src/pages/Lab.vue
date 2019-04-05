@@ -1,6 +1,15 @@
 <template>
   <div class="labpage">
     <div id="menu-blocks">
+      <div class="menu-button" @click="addBlock('terminal')">
+        <img
+          srcset="/assets/b-terminal.svg"
+          src="/assets/b-terminal.png"
+          width="100%"
+          height="100%"
+          alt
+        >
+      </div>
       <div class="menu-button" @click="addBlock('operations')">
         <img
           srcset="/assets/b-operations.svg"
@@ -125,51 +134,27 @@ export default {
 
   methods: {
     setup() {
-      this.addBlock('start')
-      this.addBlock('stop')
-      // this.map.blockGroup[1].moveDown(100)
-
-      // insert stop into startgroup
-      this.map.content.removeChild(this.map.blockGroup[1])
-      this.map.blockGroup[0].insert(this.map.blockGroup[1])
-      this.map.blockGroup[0].main = true
-      this.map.blockGroup[0].update()
     },
     addBlock(type) {
       // set some default parameter
-      const terminal = ['start', 'stop']
       let id = this.blocks.length;
       let flowData = { id: id }
       let startLocation = {
         x: 100,
         y: 100
       }
-      if (terminal.includes(type)) {
-        flowData = {
-          id: id,
-          type: type,
-          group: 'terminal'
-        };
-        startLocation = {
-          x: 250,
-          y: 75
-        }
-        type = 'terminal'
-      }
 
       // add sprite
       let block = new Block({
         type: type,
-        flowData: flowData,
+        flowdata: { id: id },
         coords: startLocation,
         map: this.map
       });
-      let group = new BlockGroup(block)
 
       // insert into map/container/list
-      this.map.content.addChild(group);
+      this.map.content.addChild(block);
       this.blocks.push(block);
-      this.map.blockGroup.push(group);
 
       // console.log([`insert a/an ${type} block in Workspace`, this.blocks]);
     },

@@ -57,8 +57,9 @@ export default class BlockGroup extends Container {
   // check next
   update() {
     this.insertArrow()
-    this.next.block.x = this.hitBox.coords.x + (this.block.width / 2)
-    this.next.block.y = this.hitBox.coords.y + (this.next.block.height / 2) + 32
+    if (this.next) {
+      this.next.moveDown(this.height)
+    }
 
   }
 
@@ -78,7 +79,7 @@ export default class BlockGroup extends Container {
   ready(insertBlock) {
     if (this.next && !this.nextReady) {
       // move block
-      this.next.moveDown(insertBlock.height + 32);
+      this.next.moveDown(insertBlock.height);
       this.hitBox.bottom += (insertBlock.height + 32);
       // console.log(this.hitBox.bottom)
       // expand hitbox
@@ -94,7 +95,7 @@ export default class BlockGroup extends Container {
   cancelReady(insertBlock, insert = false) {
     if (this.nextReady) {
       // move block
-      if (!insert) { this.next.moveUp(insertBlock.height + 32); }
+      this.next.moveUp(insertBlock.height)
       this.hitBox.bottom -= (insertBlock.height + 32);
       console.log(this.hitBox.bottom)
       // remove additional hitbox
