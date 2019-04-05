@@ -133,6 +133,7 @@ export default {
       this.map.content.removeChild(this.map.blockGroup[1])
       this.map.blockGroup[0].insert(this.map.blockGroup[1])
       this.map.blockGroup[0].main = true
+      this.map.blockGroup[0].update()
     },
     addBlock(type) {
       // set some default parameter

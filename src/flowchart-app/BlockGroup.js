@@ -27,9 +27,7 @@ export default class BlockGroup extends Container {
     this.x += range
     return this
   }
-
-  // check next
-  update() {
+  insertArrow() {
     if (this.next && !this.hitBox) {
       let coords = {
         x: this.block.x - (this.block.width / 2),
@@ -52,14 +50,15 @@ export default class BlockGroup extends Container {
       this.arrow.y = this.block.y + (this.arrow.height / 2) + (this.block.height / 2);
 
       this.addChild(this.hitBox, this.arrow);
-      // this.next.moveDown(32 + this.block.height);
-
-      // console.log(['add arrow', this.hitBox]);
-    } else {
-      // destroy arrow
+      // this.next.moveDown(32)
     }
+  }
+
+  // check next
+  update() {
+    this.insertArrow()
     this.next.block.x = this.hitBox.coords.x + (this.block.width / 2)
-    this.next.block.y = this.hitBox.coords.y + (this.next.block.height /2 ) + 32
+    this.next.block.y = this.hitBox.coords.y + (this.next.block.height / 2) + 32
 
   }
 
@@ -67,7 +66,7 @@ export default class BlockGroup extends Container {
   insert(group) {
     this.next = group;
     this.addChild(this.next);
-    this.update();
+    // this.update();
   }
 
   // remove next blockgroup to fill in parent
@@ -92,10 +91,10 @@ export default class BlockGroup extends Container {
   }
 
   //cancel insert
-  cancelReady(insertBlock) {
+  cancelReady(insertBlock, insert = false) {
     if (this.nextReady) {
       // move block
-      this.next.moveUp(insertBlock.height + 32);
+      if (!insert) { this.next.moveUp(insertBlock.height + 32); }
       this.hitBox.bottom -= (insertBlock.height + 32);
       console.log(this.hitBox.bottom)
       // remove additional hitbox

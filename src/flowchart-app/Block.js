@@ -107,6 +107,7 @@ export default class Block extends Container {
 
       // checkCollide
       this.collide = this.parent.checkCollision(this.parent);
+      console.log(this.collide)
 
       //reserve space
       if (this.collide) {
@@ -125,11 +126,12 @@ export default class Block extends Container {
     this.parent.map.drag(true)
 
     if (this.collide) {
-      this.collide.cancelReady(this.parent)
+      this.collide.cancelReady(this.parent, true)
       this.parent.x = this.collide.block.x
       this.parent.y = this.collide.hitBox.bottom + (this.parent.height / 2)
       this.parent.parent.insert(this.collide.next)
       this.collide.insert(this.parent.parent)
+      this.parent.parent.insertArrow()
     }
   }
 
