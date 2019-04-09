@@ -103,8 +103,6 @@ export default {
     window.addEventListener("resize", this.refreshCanvasSize);
 
     // blocks
-    this.blocks = [];
-    this.map.blockGroup = [];
 
     loader.add([
       '/assets/b-terminal.png',
@@ -128,60 +126,25 @@ export default {
       this.addBlock('start')
       this.addBlock('stop')
       // this.map.blockGroup[1].moveDown(100)
-
-      // insert stop into startgroup
-      this.map.content.removeChild(this.map.blockGroup[1])
-      this.map.blockGroup[0].insert(this.map.blockGroup[1])
-      this.map.blockGroup[0].main = true
-      this.map.blockGroup[0].update()
     },
     addBlock(type) {
       // set some default parameter
-      const terminal = ['start', 'stop']
-      let id = this.blocks.length;
-      let flowdata = { id: id }
-      let startLocation = {
-        x: 100,
-        y: 100
-      }
-      if (terminal.includes(type)) {
-        flowdata = {
-          id: id,
-          type: type,
-          group: 'terminal'
-        };
-        startLocation = {
-          x: 250,
-          y: 75
-        }
+      let location = {x: 100, y: 150}
+      if (type === 'start') {
         type = 'terminal'
+        location = {x: 300, y: 60}
+      } else if (type === 'stop') {
+        type = 'terminal'
+        location = {x: 300, y: 160}
       }
 
-      // add sprite
-      let block = new Block({
+      const newBlock = new Block({
         type: type,
-        flowdata: flowdata,
-        coords: startLocation,
-        map: this.map
-      });
-      let group = new BlockGroup(block)
+        map: this.map,
+        coords: location
+      })
 
-      // insert into map/container/list
-      this.map.content.addChild(group);
-      this.blocks.push(block);
-      this.map.blockGroup.push(group);
-
-      // console.log([`insert a/an ${type} block in Workspace`, this.blocks]);
-    },
-
-    delBlock(id) {
-      this.map.removeChild(this.blocks[id]);
-      this.blocks[id] = null;
-
-      this.map.removeChild(this.map.blockGroup[id]);
-      this.map.blockGroup[id] = null;
-
-      console.log(`deleted block id = ${id}`);
+      this.map.content.addChild(newBlock)
     },
 
     getCanvasSize() {
