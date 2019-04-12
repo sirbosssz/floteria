@@ -33,15 +33,17 @@ export default class Block extends Container {
     this.addChild(this.block);
 
     // dropzone -> arrow
-    this.arrow = new Sprite(loader.resources['/assets/connector.png'].texture);
-    this.arrow.x = (this.block.width / 2) - (this.arrow.width / 2)
-    this.arrow.y = this.block.height
+    // if (this.flowdata.type !== 'start') {
+    //   this.arrow = new Sprite(loader.resources['/assets/connector.png'].texture);
+    //   this.arrow.x = (this.block.width / 2) - (this.arrow.width / 2)
+    //   this.arrow.y = 0 - this.arrow.height
 
-    this.addChild(this.arrow)
+    //   this.addChild(this.arrow)
 
-    this.dropzoneArea = {
-      top: this.arrow.y
-    }
+    //   this.dropzoneArea = {
+    //     top: this.arrow.y
+    //   }
+    // }
 
     // coords
     this.pivot = {
@@ -51,8 +53,8 @@ export default class Block extends Container {
     this.hitBox = {
       left: this.x - (this.width / 2),
       right: this.x + (this.width / 2),
-      top: this.y - (this.height / 2),
-      bottom: this.y + (this.height / 2)
+      top: this.y,
+      bottom: this.y + (this.height),
     }
 
     // map
@@ -64,11 +66,10 @@ export default class Block extends Container {
       .on('pointerupoutside', this.onBlockUndrag)
       .on('pointermove', this.onBlockDrag)
 
-    console.log(['Y', this.y, 'dropzone Y', this.dropzoneArea.top])
   }
 
   onBlockClick(event) {
-    console.log(['clicked on Block: ', this])
+    console.log(['clicked on Block: ', this.parent])
     this.data = event.data;
     this.dragging = true;
     this.parent.map.drag(false)
@@ -79,6 +80,14 @@ export default class Block extends Container {
       var newPosition = this.data.getLocalPosition(this.parent.map);
       this.parent.x = newPosition.x;
       this.parent.y = newPosition.y;
+
+      this.parent.hitBox = {
+        left: this.parent.x - (this.parent.width / 2),
+        right: this.parent.x + (this.parent.width / 2),
+        top: this.parent.y - (this.parent.height / 2),
+        bottom: this.parent.y + (this.parent.height / 2)
+      }
+      this.parent.checkColision()
     }
   }
 
@@ -86,5 +95,16 @@ export default class Block extends Container {
     this.data = null;
     this.dragging = false;
     this.parent.map.drag(true)
+  }
+
+  checkColision() {
+    this.map.blockList.forEach(block => {
+      if (block.flowdata.type === 'connector') {
+        if (this.hitBox.left < block.hitBox.right && this.hitBox.right > block.hitBox.left) {
+          console.log('hit side x')
+        }
+        console.log(['top', this.hitBox.top, block.hitBox.top])
+      }
+    })
   }
 }

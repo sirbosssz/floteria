@@ -103,48 +103,66 @@ export default {
     window.addEventListener("resize", this.refreshCanvasSize);
 
     // blocks
+    this.map.blockList = [];
 
-    loader.add([
-      '/assets/b-terminal.png',
-      '/assets/b-operations.png',
-      '/assets/b-io.png',
-      '/assets/b-decision.png',
-      '/assets/connector.png'
-    ]).load(this.setup)
-    
+    loader
+      .add([
+        "/assets/b-terminal.png",
+        "/assets/b-operations.png",
+        "/assets/b-io.png",
+        "/assets/b-decision.png",
+        "/assets/connector.png"
+      ])
+      .load(this.setup);
   },
 
   beforeDestroy() {
-    console.log('close lab')
-    loader.reset()
+    console.log("close lab");
+    loader.reset();
     this.app.stage.destroy(true);
     this.app.destroy(true, true);
   },
 
   methods: {
     setup() {
-      this.addBlock('start')
-      this.addBlock('stop')
+      this.map.blockList.push(this.addBlock("start"));
+      this.map.blockList.push(this.addBlock("arrow"));
+      this.map.blockList.push(this.addBlock("stop"));
       // this.map.blockGroup[1].moveDown(100)
+      console.log(this.map.blockList);
+      let posY = 60;
+      this.map.blockList.forEach(block => {
+        block.y = posY + block.height / 2;
+        posY = block.y + block.height / 2;
+      });
+
     },
     addBlock(type) {
       // set some default parameter
-      let location = {x: 100, y: 150}
-      if (type === 'start') {
-        type = 'terminal'
-        location = {x: 300, y: 60}
-      } else if (type === 'stop') {
-        type = 'terminal'
-        location = {x: 300, y: 160}
+      let location = { x: 100, y: 150 };
+      let flowdata = { name: type, type: "components" };
+      if (type === "start") {
+        (type = "terminal"), (location = { x: 300, y: 60 });
+      } else if (type === "stop") {
+        type = "terminal";
+        location = { x: 300, y: 60 };
+      } else if (type === "arrow") {
+        location = { x: 300, y: 60 };
+        flowdata = {
+          type: "connector"
+        };
       }
 
       const newBlock = new Block({
         type: type,
+        flowdata: flowdata,
         map: this.map,
         coords: location
-      })
+      });
 
-      this.map.content.addChild(newBlock)
+      this.map.content.addChild(newBlock);
+      return newBlock;
+      // this.map.blockList.push(newBlock)
     },
 
     getCanvasSize() {
