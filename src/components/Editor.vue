@@ -13,7 +13,7 @@
 <script>
 import { Game, Auto, Scale } from "phaser";
 import scene from "@/flowchart-app/scenes";
-import storage from '@/flowchart-app/storage';
+import storage from "@/flowchart-app/storage";
 
 export default {
   name: "Editor",
@@ -37,17 +37,28 @@ export default {
     const config = {
       type: Phaser.Auto,
       parent: this.$el,
-      scale: {
-        autoCenter: Phaser.Scale.CENTER_BOTH
-      },
       width: width,
       height: height,
       backgroundColor: 0xf9f9f9,
+      scale: {
+        autoCenter: Phaser.Scale.CENTER_BOTH
+      },
+      physics: {
+        default: "arcade",
+        arcade: {
+          debug: true,
+          gravity: { y: 0 }
+        }
+      },
       scene
     };
     this.app = new Phaser.Game(config);
     window.addEventListener("resize", this.resize);
     storage.type = this.$props.type;
+    storage.config = {
+      width,
+      height
+    }
 
     console.log(
       "%c Open Floteria: Editor ",
@@ -56,6 +67,7 @@ export default {
   },
   beforeDestroy() {
     this.app.destroy(true);
+    console.clear();
     console.log(
       "%c Close Floteria: Editor ",
       "background: #DD0000; color: #ededed; padding: 2px;"

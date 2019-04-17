@@ -1,8 +1,9 @@
-import {Scene} from 'phaser'
+import { Scene } from 'phaser'
 
-export default class Controller extends Scene{
-  constructor() {
-    super({key: 'Controller'})
+export default class Controller extends Scene {
+  constructor(config, parent) {
+    super(config)
+    this.parent = parent;
     console.log('load scene: Controller')
   }
 }
