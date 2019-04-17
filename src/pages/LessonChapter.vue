@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1>Lesson : {{$route.params.chapter}}</h1>
+    <h1>Lesson : {{nameLesson.name}}<!-- {{$route.params.chapter}}//{{lessonList[0].data.name}} --></h1>
     <router-link to="/lessons">Back</router-link>
     <div class="box">
       <ul v-if="contents">
-        <li :key="content.id" v-for="content in contents">
-          <router-link :to="content.link">{{content.data.title}}</router-link>
+        <li :key="contented.id" v-for="contented in contents">
+          <router-link :to="contented.link">{{contented.data.title}}</router-link>
         </li>
       </ul>
       <div v-else>Loading</div>
@@ -25,17 +25,20 @@ export default {
     return {
       contents: [],
       exercises: [],
-      mission: []
+      mission: [],
+      lessonList: [],
+      nameLesson: ''
     };
   },
   created() {},
   mounted() {
+    console.log(firestore);
     let query = firestore
       .collection(`/chapters/${this.$route.params.chapter}/contents`)
       .orderBy("title", "asc");
     query.get().then(snapshot => {
       snapshot.forEach(doc => {
-        console.log(`${doc.id} => ${doc.data()}`);
+        console.log(`1.1 ${doc.id} => ${doc.data()}`);
         this.contents.push({
           id: doc.id,
           data: doc.data(),
@@ -43,6 +46,26 @@ export default {
         });
       });
     });
+    // let query2 = firestore.collection(`chapters/`)
+    // .orderBy("name", "asc");
+    // query2.get().then(snapshot => {
+    //   snapshot.forEach(doc => {
+    //     console.log("2.", `${doc.id} => ${doc.data()}`);
+    //       this.lessonList.push({
+    //         id: doc.id,
+    //         link: `/lessons/${doc.id}`,
+    //         data: doc.data()
+    //       })
+    //   });
+    // });
+    let query2 = firestore.collection(`chapters/`).doc(this.$route.params.chapter)
+    query2.get().then(doc => {
+      this.nameLesson = doc.data()
+      console.log(`1.2 ${doc.id} => ${doc.data()}`)
+      console.log(`1.3`, doc.data())
+    })
+    console.log(`1.4`, nameLesson)
+    
   }
 };
 </script>

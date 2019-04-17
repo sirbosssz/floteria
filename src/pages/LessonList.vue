@@ -1,10 +1,10 @@
 <template>
   <div class="lessonPage">
-    <h1>Lesson Page</h1>
+    <h1>Lesson Page: <!-- {{lessonList[0].id}} --></h1>
     <ul>
       <li :key='lesson.id' v-for='lesson in lessonList'>
         <router-link :to="lesson.link">{{lesson.data.name}}</router-link>
-        {{lesson.data.short_desc}}
+        {{lesson.data.short_description}}
       </li>
     </ul>
   </div>
