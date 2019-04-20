@@ -3,7 +3,12 @@
         <h1>Lesson : {{subLesson.title}}<!--  /{{$route.params.chapter}} / {{$route.params.page}} --></h1>
         <router-link to="/lessons/">Back</router-link>
         <div class="box">
-            {{subLesson.description.content}}
+            <!--
+            {{subLesson.description}}
+            -->
+            <li :key="contented.id" v-for="contented in subLesson.description">
+                {{contented.content}}
+            </li>
         <!-- <ul v-if="contents">
                 <li :key="contented.id" v-for="contented in contents">
                     <router-link :to="contented.link">{{contented.data.title}}</router-link>
