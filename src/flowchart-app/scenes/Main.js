@@ -23,36 +23,39 @@ export default class Main extends Scene {
     // map bounds
     this.cameras.main.setBounds(0, 0, sceneConfig.width, sceneConfig.height)
 
-    const background = this.add.rectangle(sceneConfig.width / 2, sceneConfig.height / 2, sceneConfig.width, sceneConfig.height, 0xDDDDDD);
+    const background = this.add.rectangle(sceneConfig.width / 2, sceneConfig.height / 2, sceneConfig.width, sceneConfig.height, 0xEAEAEA);
 
-    // store flow to state
-    storage.flow = []
+    // load flow from storage
+    this.loadFlow();
+
+    // TODO: add UI Blocks Bar
+    // TODO: add UI Control
+    // TODO: add Editor Area
 
     // test object
     let terminal = this.add.sprite(400, 80, 'block_terminal').setOrigin(0).setInteractive();
-    terminal.flowData = { type: 'start' }
-    // this.input.setDraggable(terminal);
+    terminal.flowData = { name: 'start', type: 'terminal' }
+    this.input.setDraggable(terminal);
     storage.flow.push(terminal)
     let arrow1 = this.add.sprite(terminal.x + (terminal.width / 2), terminal.y + terminal.height, 'arrow').setOrigin(0.5, 0).setInteractive();
     arrow1.input.dropZone = true;
     terminal.arrow = arrow1;
     terminal.arrow.index = storage.flow.findIndex(flow => flow === terminal)
-    console.log(terminal.arrow.index)
 
     let terminal2 = this.add.sprite(0, 30, 'block_terminal').setOrigin(0).setInteractive();
     this.input.setDraggable(terminal2);
-    terminal2.flowData = { type: 'stop' }
+    terminal2.flowData = { name: 'stop', type: 'terminal' }
 
     let opertaion1 = this.add.sprite(0, 90, 'block_operations').setOrigin(0).setInteractive();
-    opertaion1.flowData = { type: 'operation', data: 1 }
+    opertaion1.flowData = { name: 'set', type: 'operation', var: {name: 'test', value: 'text1'} }
     this.input.setDraggable(opertaion1);
 
     let opertaion2 = this.add.sprite(0, 170, 'block_operations').setOrigin(0).setInteractive();
-    opertaion2.flowData = { type: 'operation', data: 2 }
+    opertaion2.flowData = { name: 'set', type: 'operation', var: {name: 'test', value: 'text2'}}
     this.input.setDraggable(opertaion2);
 
     let io1 = this.add.sprite(0, 250, 'block_io').setOrigin(0).setInteractive();
-    io1.flowData = { type: 'io', data: 1 }
+    io1.flowData = { name: 'print', type: 'output', var: {name: 'test'} }
     this.input.setDraggable(io1);
 
     let condition1 = this.add.sprite(0, 330, 'block_decision').setOrigin(0).setInteractive();
@@ -108,7 +111,7 @@ export default class Main extends Scene {
 
       let newY
       // generate arrow
-      if (object.flowData.type == 'operation' || object.flowData.type == 'io') {
+      if (object.flowData.type == 'operation' || object.flowData.type == 'output' || object.flowData.type == 'input') {
         newY = object.y + object.height
         let newArrow = this.add.sprite(object.x + (object.width / 2), object.y + object.height, 'arrow').setOrigin(0.5, 0).setInteractive();
         newArrow.input.dropZone = true;
@@ -176,9 +179,68 @@ export default class Main extends Scene {
     this.input.on('dragend', (pointer, object) => {
       console.log(['stop drag', object])
     })
+
+    // add run button
+    let run_button = this.add.rectangle(500, 550, 100, 40, 0x330000).setInteractive();
+    this.add.text(500, 550, 'RUN step', { font: '16px Quark', fill: '#ededed' }).setOrigin(0.5);
+
+    let current_step = 0
+    // run events
+    run_button.on('pointerdown', () => {
+      this.runFlow(storage.flow[current_step].flowData, current_step)
+      current_step++
+      if (current_step === storage.flow.length) {
+        console.log('----------------end----------------')
+        current_step = 0
+      }
+    })
+
     // center camera
     this.cameras.main.centerOn(0, 0);
     console.log(storage.flow)
+  }
+
+  runFlow(flow, index) {
+    console.log(['running', flow])
+
+    // check start
+    if (index === 0 && flow.name !== 'start') {
+      console.log('----------------error: no start block----------------');
+      this.current_step = 0
+      return
+    }
+    // check end
+    if (index+1 === storage.flow.length && flow.name !== 'stop') {
+      console.log('----------------error: no stop block----------------');
+      this.current_step = 0
+      return
+    }
+    // create var
+    if (flow.name === 'set') {
+      // check var name in flowVar
+      let varData = storage.flowData.find(data => data.name === flow.var.name)
+      let varIndex = storage.flowData.findIndex(data => data === varData)
+      if (varIndex !== -1) { // found
+        storage.flowData[varIndex] = flow.var
+      } else { // not found
+        storage.flowData.push(flow.var)
+      }
+    }
+    // output
+    if (flow.name === 'print') {
+      let data
+      if (flow.var !== undefined) {
+        data = storage.flowData.find(text => text.name == flow.var.name)
+        data = data.value
+      } else {
+        data = flow.message
+      }
+      console.log(`OUTPUT: ${data}`)
+    }
+  }
+
+  loadFlow() {
+    storage.flow = []
   }
   loadScene(config, sceneClass) {
     const handle = {

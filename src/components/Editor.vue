@@ -55,10 +55,6 @@ export default {
     this.app = new Phaser.Game(config);
     window.addEventListener("resize", this.resize);
     storage.type = this.$props.type;
-    storage.config = {
-      width,
-      height
-    }
 
     console.log(
       "%c Open Floteria: Editor ",
