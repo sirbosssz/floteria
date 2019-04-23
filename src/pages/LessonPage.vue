@@ -7,7 +7,12 @@
             {{subLesson.description}}
             -->
             <li :key="contented.id" v-for="contented in subLesson.description">
-                {{contented.content}}
+                <template v-if="contented.type === 'text'">
+                    {{contented.content}}
+                </template>
+                <template v-else>
+                    <img :src="contented.content">
+                </template>
             </li>
         <!-- <ul v-if="contents">
                 <li :key="contented.id" v-for="contented in contents">
@@ -40,6 +45,7 @@ export default {
         }
     },
     created() {},
+     
     mounted() {
         // let query = firestore
         // .collection(`/chapters/${this.$route.params.chapter}/contents/`)
