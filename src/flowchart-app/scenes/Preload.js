@@ -20,6 +20,8 @@ export default class Preload extends Scene {
     this.load.image('block_io', bIO);
     this.load.image('block_decision', bDecision);
     this.load.image('arrow', connector);
+
+    this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
   }
   create() {
     this.scene.start('Main')

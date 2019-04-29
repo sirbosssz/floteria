@@ -39,7 +39,7 @@ export default {
       parent: this.$el,
       width: width,
       height: height,
-      backgroundColor: 0xf9f9f9,
+      backgroundColor: 0xeaeaea,
       scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH
       },
