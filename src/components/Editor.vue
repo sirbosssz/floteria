@@ -1,5 +1,7 @@
 <template>
-  <div id="editor"></div>
+  <div id="editor">
+    <!-- <input id="textinput" value="test"> -->
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -27,7 +29,6 @@ export default {
     },
     resize() {
       const { width, height } = this.getEditorSize();
-      this.app.scale.resize(width, height);
     }
   },
   mounted() {
@@ -41,7 +42,7 @@ export default {
       height: height,
       backgroundColor: 0xeaeaea,
       scale: {
-        autoCenter: Phaser.Scale.CENTER_BOTH
+        mode: Phaser.Scale.RESIZE
       },
       physics: {
         default: "arcade",
@@ -53,7 +54,7 @@ export default {
       scene
     };
     this.app = new Phaser.Game(config);
-    window.addEventListener("resize", this.resize);
+    // window.addEventListener("resize", this.resize);
     storage.type = this.$props.type;
 
     console.log(

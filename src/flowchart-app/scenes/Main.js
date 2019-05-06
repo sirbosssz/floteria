@@ -13,22 +13,18 @@ export default class Main extends Scene {
   constructor() {
     super({ key: 'Main' })
     console.log('load scene: Main')
-    // console.log(['on Main', storage])
   }
   create() {
-    let resolution = {
-      width: this.game.config.width,
-      height: this.game.config.height,
-    }
-
+    let resolution = this.game.config.width / this.game.config.height;
+    let outputSize = resolution > 1.7 ? this.game.config.width / 4 : this.game.config.width / 3;
     // editor zone
     // landscape
     this.loadScene({
       key: 'editor',
-      x: resolution.width/3,
+      x: outputSize,
       y: 0,
-      width: (resolution.width/3) + resolution.width,
-      height: resolution.height
+      width: outputSize + this.game.config.width,
+      height: this.game.config.height
     }, Editor)
     // protrait
 
@@ -39,8 +35,8 @@ export default class Main extends Scene {
         key: 'lab',
         x: 0,
         y: 0,
-        width: resolution.width/3,
-        height: resolution.height
+        width: outputSize,
+        height: this.game.config.height
       }, LabOutput)
       // protrait
     } else {
@@ -49,12 +45,16 @@ export default class Main extends Scene {
         key: 'lesson',
         x: 0,
         y: 0,
-        width: resolution.width/3,
-        height: resolution.height
+        width: outputSize,
+        height: this.game.config.height
       }, LessonOutput)
       // protrait
     }
-
+    var scenes = {
+      editor: this.scene.get('editor'),
+      output: this.scene.get(storage.type)
+    }
+    // console.log(this.scene.get('editor'))
   }
 
   loadScene(config, sceneClass) {
@@ -63,7 +63,6 @@ export default class Main extends Scene {
     }
     const area = this.add.zone(config.x, config.y, config.width, config.height).setOrigin(0);
     const window = new sceneClass(handle, area);
-
     this.scene.add(config.key, window, true);
   }
 }
