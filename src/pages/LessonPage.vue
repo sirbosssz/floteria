@@ -1,19 +1,19 @@
 <template>
-    <div>
+    <div class="lessonPage">
         <h1>Lesson : {{subLesson.title}}<!--  /{{$route.params.chapter}} / {{$route.params.page}} --></h1>
         <router-link to="/lessons/">Back</router-link>
-        <div class="box">
+        <div class="box has-text-left">
             <!--
             {{subLesson.description}}
             -->
-            <li :key="contented.id" v-for="contented in subLesson.description">
+            <ul :key="contented.id" v-for="contented in subLesson.description">
                 <template v-if="contented.type === 'text'">
                     {{contented.content}}
                 </template>
-                <template v-else>
+                <div v-else class="has-text-center">
                     <img :src="contented.content">
-                </template>
-            </li>
+                </div   >
+            </ul>
         <!-- <ul v-if="contents">
                 <li :key="contented.id" v-for="contented in contents">
                     <router-link :to="contented.link">{{contented.data.title}}</router-link>

@@ -1,16 +1,29 @@
 <template>
-  <div class="lessonPage">
+
+  <div class="lessonList">
     <h1>Lesson Page: <!-- {{lessonList[0].id}} --></h1>
-    <ul>
-      <li :key='lesson.id' v-for='lesson in lessonList'>
-        <router-link :to="lesson.link">{{lesson.data.name}}</router-link>
-        {{lesson.data.short_description}}
-      </li>
+    
+    <ul :key='lesson.id' v-for='lesson in lessonList' class="has-text-left">
+      <div class="card">
+        <div class="card-content">
+              <p class="title is-5">
+                <router-link :to="lesson.link">{{lesson.data.name}}</router-link>
+              </p>
+              <p class="subtitle is-7">
+                {{lesson.data.short_description}}
+              </p>
+          </div>
+      </div>      
     </ul>
+    
   </div>
+
+
+
 </template>
 
 <script>
+
 import firebase from "firebase/app";
 import "firebase/firestore";
 

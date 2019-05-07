@@ -1,15 +1,17 @@
 <template>
-  <div>
+  <div class="lessonChapter">
     <h1>Lesson : {{nameLesson.name}}<!-- {{$route.params.chapter}}//{{lessonList[0].data.name}} --></h1>
     <router-link to="/lessons">Back</router-link>
-    <div class="box">
+    
       <ul v-if="contents">
         <li :key="contented.id" v-for="contented in contents">
+          <div class="card card-content">
           <router-link :to="contented.link">{{contented.data.title}}</router-link>
+          </div>
         </li>
       </ul>
       <div v-else>Loading</div>
-    </div>
+    
   </div>
 </template>
 
