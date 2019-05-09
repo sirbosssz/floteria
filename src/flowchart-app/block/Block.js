@@ -40,10 +40,9 @@ export default class Block extends Phaser.GameObjects.Sprite {
     this.block = {
       width: texture_size[textureIndex].width,
       height: texture_size[textureIndex].height,
-      y: this.y + ((this.height - texture_size[textureIndex].height) / 2)
+      y: this.y + ((this.height - texture_size[textureIndex].height) / 2),
+      x: this.x + ((this.width - texture_size[textureIndex].height) / 2)
     }
-
-    console.log([this.x, this.y ,texture_size[textureIndex]])
 
     // show text inside blocks
     this.text = scene.add.text(x, y + (this.height / 2), 'แสดงคำสั่ง', {
@@ -54,9 +53,9 @@ export default class Block extends Phaser.GameObjects.Sprite {
 
   }
 
-  addArrow() {
+  addArrow(scene) {
     // show arrow to connect
-    this.arrow = scene.add.sprite(x, y + this.height, 'arrow').setOrigin(0.5, 0).setInteractive();
+    this.arrow = scene.add.sprite(this.x, this.block.y + this.block.height - 2, 'arrow_normal').setOrigin(0.5, 0).setInteractive();
     this.arrow.input.dropZone = true;
   }
 
@@ -64,9 +63,16 @@ export default class Block extends Phaser.GameObjects.Sprite {
     // change x,y of block
     this.x = x;
     this.y = y;
+
+    this.block.y = this.y + ((this.height - this.block.height) / 2);
+    this.block.x = this.x + ((this.width - this.block.height) / 2);
+
     // change x,y of text
     this.text.x = x;
     this.text.y = y + (this.height / 2);
+
+    this.arrow.x = x;
+    this.arrow.y = this.block.y + this.block.height - 2
   }
 
   setCommand(command) {

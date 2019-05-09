@@ -1,6 +1,6 @@
 <template>
   <div class="labpage">
-    <Editor type='lab' />
+    <Editor type='lab'/>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ import Editor from '@/components/Editor'
 
 export default {
   name: 'Lab',
-  components:  {
+  components: {
     Editor
   }
 }
