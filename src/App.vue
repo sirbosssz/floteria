@@ -6,7 +6,7 @@
         <!-- navigator link -->
         <router-link to="/">หน้าแรก</router-link>
         <router-link to="/lab">ห้องทดลอง</router-link>
-        <router-link to="/lessons">บทเรียน</router-link>
+        <router-link to="/cafe">บทเรียน</router-link>
       </div>
     </nav>
     <router-view/>
@@ -40,7 +40,7 @@ html {
   }
 }
 #app {
-  text-align: center;
+  // text-align: center;
   min-height: 100vh;
   // color: #2c3e50;
 }

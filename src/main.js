@@ -23,9 +23,6 @@ const config = {
 
 firebase.initializeApp(config);
 
-const firestore = firebase.firestore();
-const settings = { /* your settings... */ timestampsInSnapshots: true };
-firestore.settings(settings);
 firebase.firestore().enablePersistence()
 
 new Vue({
