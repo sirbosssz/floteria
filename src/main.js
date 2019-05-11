@@ -8,6 +8,7 @@ import './registerServiceWorker'
 import 'bulma'
 
 import firebase from 'firebase/app';
+import 'firebase/firestore'
 
 Vue.config.productionTip = false
 
@@ -21,6 +22,11 @@ const config = {
 }
 
 firebase.initializeApp(config);
+
+const firestore = firebase.firestore();
+const settings = { /* your settings... */ timestampsInSnapshots: true };
+firestore.settings(settings);
+firebase.firestore().enablePersistence()
 
 new Vue({
   router,
