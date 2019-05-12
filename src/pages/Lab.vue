@@ -12,7 +12,7 @@
 }
 @media (min-width: 1408px) {
   .labpage {
-    height: calc(100vh - 60px);
+    height: calc(100vh - 43px);
   }
 }
 </style>

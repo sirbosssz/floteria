@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Navbar/>
     <section class="hero">
       <div class="hero-body">
         <div class="container">
@@ -17,7 +18,7 @@
           <HomeCard :content="cardData.lab"/>
         </div>
         <div class="column is-one-third">
-          <HomeCard :content="cardData.cafe"/>
+          <HomeCard :content="cardData.lessons"/>
         </div>
       </div>
     </section>
@@ -25,11 +26,13 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar.vue";
 import HomeCard from "@/components/HomeCard.vue";
 
 export default {
   name: "HomePage",
   components: {
+    Navbar,
     HomeCard
   },
   data() {
@@ -37,16 +40,15 @@ export default {
       cardData: {
         lab: {
           title: "แลปทดลอง",
-          description:
-            "ห้องสำหรับทดลองเขียนโปรแกรมอย่างอิสระจากคำสั่งพื้นฐาน",
+          description: "ห้องสำหรับทดลองเขียนโปรแกรมอย่างอิสระจากคำสั่งพื้นฐาน",
           iconURL: "",
           link: "/lab"
         },
-        cafe: {
-          title: "คาเฟ่บทเรียน",
-          description: "ฝึกเขียนโปรแกรมขั้นพื้นฐานจากบทเรียนและมินิเกม",
+        lessons: {
+          title: "บทเรียนเบื้องต้น",
+          description: "ฝึกเขียนโปรแกรมขั้นพื้นฐานจากบทเรียนและมินิเกมในร้านเบเกอรี่",
           iconURL: "",
-          link: "/cafe"
+          link: "/lessons"
         }
       }
     };
@@ -56,18 +58,19 @@ export default {
 
 <style lang="scss">
 .home {
-  text-align: center;
   color: #121212;
-}
-.hero {
-  // background: #fff;
+  .hero {
+    background: #fff;
+  }
 }
 .home-title {
   font-size: 20pt;
   font-weight: bold;
+  text-align: center;
 }
 .home-subtitle {
   font-size: 12pt;
+  text-align: center;
 }
 .features {
   margin-top: 1rem;

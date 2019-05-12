@@ -27,9 +27,9 @@ export default new Router({
       component: () => import('./pages/Lab.vue')
     },
     {
-      path: '/cafe',
-      name: 'cafe',
-      component: () => import('./pages/CafeLesson.vue')
+      path: '/lessons',
+      name: 'lessons',
+      component: () => import('./pages/LessonHome.vue')
     }
   ]
 })

@@ -35,43 +35,43 @@ export default {
 @import "@/assets/colors.scss";
 
 .home-card-content {
-  // background: #eeeeee;
+  background: #ededed;
   text-align: left;
   padding: 1em;
+  img {
+    object-fit: cover;
+    height: 28vh;
+    width: 100%;
+    border-radius: 8px;
+    transition: filter 0.5s ease;
+  }
+  img:hover {
+    filter: brightness(0.9);
+  }
 }
-.text{
+.text {
   padding: 0 1em 0 1em;
-}
-
-img {
-  object-fit: cover;
-  height: 28vh;
-  width: 100%;
-  border-radius: 8px;
-  transition: filter .5s ease;
-}
-img:hover{
-  filter: brightness(0.9);
-}
-
-h1 {
-  font-size: 18pt;
-  font-weight: bold;
-  color: $orange;
-  transition: color .5s ease;
-}
-h1:hover {
-  color: $orange-light;
-}
-p {
-  font-size: 14pt;
-  color: #121212;
+  h1 {
+    font-size: 18pt;
+    font-weight: bold;
+    color: $orange;
+    transition: color 0.5s ease;
+  }
+  h1:hover {
+    color: $orange-light;
+  }
+  p {
+    font-size: 14pt;
+    color: #121212;
+  }
 }
 
 @media (min-width: 769px) {
-  img {
-  object-fit: cover;
-  height: 180px;
+  .home-card-content {
+    img {
+      object-fit: cover;
+      height: 180px;
+    }
   }
 }
 </style>
