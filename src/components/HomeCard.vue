@@ -23,7 +23,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$props);
     if (this.$props.content.iconURL.length > 0) {
       this.image = this.$props.content.iconURL;
     }
@@ -40,7 +39,7 @@ export default {
   padding: 1em;
   img {
     object-fit: cover;
-    height: 28vh;
+    height: 280px;
     width: 100%;
     border-radius: 8px;
     transition: filter 0.5s ease;
@@ -70,7 +69,7 @@ export default {
   .home-card-content {
     img {
       object-fit: cover;
-      height: 180px;
+      height: 35vh;
     }
   }
 }

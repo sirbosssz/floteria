@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Navbar/>
+    <Navbar page="home"/>
     <section class="hero">
       <div class="hero-body">
         <div class="container">
@@ -94,7 +94,7 @@ export default {
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   .hero {
     padding: 1em 0 1em 0;
   }

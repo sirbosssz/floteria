@@ -1,6 +1,6 @@
 <template>
   <div class="lessonHome">
-    <Navbar/>
+    <Navbar page='lesson'/>
   </div>
 </template>
 
