@@ -4,27 +4,30 @@
     <div class="navigator">
       <!-- web logo -->
       <!-- in home page -->
-      <div v-if="page === 'home'" class="logo">
-        <router-link to="/">
-          <img src="@/assets/svg/logo-main.svg" alt="Logo" width="130">
-        </router-link>
+      <div class="logo">
+        <div v-if="page === 'lesson'">
+          <router-link to="/">
+            <img src="@/assets/svg/logo-lesson.svg" alt="Logo" width="194">
+          </router-link>
+          <router-link class="hide-mobile" to="/">หน้าแรก</router-link>
+          <router-link class="hide-mobile" to="/lab">แลปทดลอง</router-link>
+        </div>
+        <!-- in lab page -->
+        <div v-else-if="page === 'lab'">
+          <router-link to="/">
+            <img src="@/assets/svg/logo-lab.svg" alt="Logo" width="158">
+          </router-link>
+          <router-link class="hide-mobile" to="/">หน้าแรก</router-link>
+          <router-link class="hide-mobile" to="/lessons">ไปยังบทเรียน</router-link>
+        </div>
+        <!-- in lesson page -->
+        <div v-else class="home-logo">
+          <router-link to="/">
+            <img src="@/assets/svg/logo-main.svg" alt="Logo" width="130">
+          </router-link>
+        </div>
       </div>
-      <!-- in lab page -->
-      <div v-else-if="page === 'lab'" class="logo">
-        <router-link to="/">
-          <img src="@/assets/svg/logo-lab.svg" alt="Logo" width="162">
-        </router-link>
-        <router-link class="hide-mobile" to="/">หน้าแรก</router-link>
-        <router-link class="hide-mobile" to="/lessons">ไปยังบทเรียน</router-link>
-      </div>
-      <!-- in lesson page -->
-      <div v-else class="logo">
-        <router-link to="/">
-          <img src="@/assets/svg/logo-lesson.svg" alt="Logo" width="190">
-        </router-link>
-        <router-link class="hide-mobile" to="/">หน้าแรก</router-link>
-        <router-link class="hide-mobile" to="/lab">แลปทดลอง</router-link>
-      </div>
+
       <!-- menu area -->
       <div class="linkmenu">
         <span v-if="login">ยินดีต้อนรับ</span>
@@ -64,7 +67,7 @@
     align-items: center;
     justify-content: space-between;
   }
-  .logo,
+  .logo > div,
   .linkmenu {
     display: flex;
   }
@@ -87,6 +90,9 @@
     .hide-mobile {
       display: flex;
     }
+    .home-logo {
+      padding-top: 1.5em;
+    }
   }
 }
 @media (min-width: 1408px) {
@@ -103,11 +109,9 @@
 <script>
 export default {
   name: "Navbar",
-  props: {
-    page: String
-  },
   data() {
     return {
+      page: "",
       login: false
     };
   },

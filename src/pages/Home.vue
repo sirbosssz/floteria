@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <Navbar page="home"/>
     <section class="hero">
       <div class="hero-body">
         <div class="container">
@@ -52,7 +51,11 @@ export default {
         }
       }
     };
-  }
+  },
+  created() {
+    let navbar = this.$parent.$refs.navbar.$data
+    navbar.page = 'home'
+  },
 };
 </script>
 
@@ -97,6 +100,7 @@ export default {
 @media (min-width: 768px) {
   .hero {
     padding: 1em 0 1em 0;
+    margin-top: -1em;
   }
   .home-title {
     font-size: 30pt;

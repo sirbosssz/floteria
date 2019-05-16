@@ -1,6 +1,5 @@
 <template>
   <div class="labpage">
-    <Navbar page="lab" ref="navbar"/>
     <div ref="editor">
       <Editor type="lab"/>
     </div>
@@ -19,20 +18,23 @@
 </style>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
 import Editor from "@/components/Editor";
 
 export default {
   name: "Lab",
   components: {
-    Navbar,
     Editor
   },
-  mounted() {
-    let navbar = this.$refs.navbar.$el
-    let editor = this.$refs.editor
-    let height = editor.clientHeight - navbar.clientHeight - 10;
-    editor.style.height = height + 'px'
+  created() {
+    let navbar = this.$parent.$refs.navbar.$data
+    navbar.page = 'lab'
   },
+  mounted() {
+    //navbar change
+    let navbar = this.$parent.$refs.navbar.$el;
+    let editor = this.$el;
+    let height = editor.clientHeight - navbar.clientHeight - 1;
+    editor.style.height = height + "px";
+  }
 };
 </script>
