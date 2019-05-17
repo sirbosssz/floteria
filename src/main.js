@@ -8,6 +8,7 @@ import './registerServiceWorker'
 import 'bulma'
 
 import firebase from 'firebase/app';
+import 'firebase/firestore'
 
 Vue.config.productionTip = false
 
@@ -21,6 +22,8 @@ const config = {
 }
 
 firebase.initializeApp(config);
+
+firebase.firestore().enablePersistence()
 
 new Vue({
   router,
