@@ -40,13 +40,13 @@ export default {
         lab: {
           title: "แลปทดลอง",
           description: "ห้องสำหรับทดลองเขียนโปรแกรมอย่างอิสระจากคำสั่งพื้นฐาน",
-          iconURL: "",
+          iconURL: "/img/card/labcard.svg",
           link: "/lab"
         },
         lessons: {
           title: "บทเรียนเบื้องต้น",
           description: "ฝึกเขียนโปรแกรมขั้นพื้นฐานจากบทเรียนและมินิเกมในร้านเบเกอรี่",
-          iconURL: "",
+          iconURL: "/img/card/lessoncard.svg",
           link: "/lessons"
         }
       }
