@@ -1,4 +1,5 @@
 import { Scene } from 'phaser'
+import storage from '../storage';
 
 export default class Controller extends Scene {
   constructor(config, parent) {
@@ -18,7 +19,7 @@ export default class Controller extends Scene {
     step_button.setScale(scale2)
 
     run_button.on('pointerdown', pointer => {
-      console.log('run program...')
+      console.log(['run program...', storage.flow])
     })
   }
 }

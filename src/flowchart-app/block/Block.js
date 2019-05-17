@@ -102,4 +102,11 @@ export default class Block extends Phaser.GameObjects.Sprite {
   setCommand(command) {
     this.text.text = command;
   }
+
+  setFlowData(data) {
+    this.flowData = data
+    if (this.flowData.type == 'output') {
+      this.setCommand('พูด ' + this.flowData.message)
+    }
+  }
 }

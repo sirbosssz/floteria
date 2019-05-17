@@ -13,6 +13,7 @@ export default class Editor extends Scene {
   }
 
   create() {
+    storage.flow = []
     this.background = this.add
       .rectangle(
         this.parent.x,
@@ -27,20 +28,32 @@ export default class Editor extends Scene {
     this.input.setDraggable(this.background);
     // insert dock menu
     const dockList = [
-      "b_input_normal",
+      // "b_input_normal",
       "b_output_normal",
-      "b_operation_normal",
-      "b_condition_normal",
-      "b_while_normal",
-      "b_for_normal"
+      "b_output_normal"
+      // "b_operation_normal",
+      // "b_condition_normal",
+      // "b_while_normal",
+      // "b_for_normal"
     ];
     const dockMenuList = [
-      "Input",
+      // "Input",
       "Output",
-      "Operation",
-      "Condition",
-      "While Loop",
-      "For Loop"
+      "Output"
+      // "Operation",
+      // "Condition",
+      // "While Loop",
+      // "For Loop"
+    ];
+    const dockCommand = [
+      {
+        type: "output",
+        message: "Hello"
+      },
+      {
+        type: "output",
+        message: "Bye"
+      }
     ];
 
     // remove block zone
@@ -57,6 +70,7 @@ export default class Editor extends Scene {
     this.removeZone.input.dropZone = true;
     this.removeZone.type = "remove";
 
+    // dock zone
     const dock = this.add.graphics();
     dock.fillStyle(0xd8d8d8, 1);
     dock.fillRect(this.parent.x, this.parent.y, 150, this.parent.height);
@@ -69,7 +83,8 @@ export default class Editor extends Scene {
         .setInteractive();
       block_menu.onDock = true;
       block_menu.index = index;
-      block_menu.setCommand(dockMenuList[index++]);
+      block_menu.setFlowData(dockCommand[index++]);
+      // block_menu.setCommand(dockMenuList[index]);
       this.input.setDraggable(block_menu);
       dockY += block_menu.block.height + 20;
     });
@@ -86,8 +101,8 @@ export default class Editor extends Scene {
       .setOrigin(0.5, 0)
       .setInteractive();
     starter1.flowData = {
-      type: 'start'
-    }
+      type: "start"
+    };
     starter1.setCommand("START");
     starter1.addArrow(this);
     starter1.id = this.id++;
@@ -102,11 +117,16 @@ export default class Editor extends Scene {
     )
       .setOrigin(0.5, 0)
       .setInteractive();
+    starter2.flowData = {
+      type: "end"
+    };
     starter2.setCommand("END");
     starter2.id = this.id++;
     this.blockSet.addChild(starter2);
     this.blockSet.insertToFlow(starter2, 1);
     this.blockSet.flowReposition();
+
+    this.blockSet.getFlowData();
 
     // drag events
     this.input.on("dragstart", (pointer, object) => {
@@ -123,7 +143,8 @@ export default class Editor extends Scene {
             .setInteractive();
           newBlockMenu.onDock = true;
           newBlockMenu.index = object.index;
-          newBlockMenu.setCommand(object.text.text);
+          newBlockMenu.setFlowData(object.flowData);
+          // newBlockMenu.setCommand(object.text.text);
           this.input.setDraggable(newBlockMenu);
           // out of dock
           object.onDock = false;
@@ -138,10 +159,10 @@ export default class Editor extends Scene {
     });
 
     this.input.on("drag", (pointer, object, dragX, dragY) => {
-      if(!object.background) {
+      if (!object.background) {
         object.moveTo(dragX, dragY);
       } else {
-        this.blockSet.moveFlow(dragX, dragY)
+        this.blockSet.moveFlow(dragX, dragY);
       }
     });
 
@@ -162,10 +183,13 @@ export default class Editor extends Scene {
     });
 
     this.input.on("dragend", (pointer, object, dropped) => {
+      // move flowdata to storage
+      storage.flow = this.blockSet.getFlowData()
+
       if (!dropped) {
       }
       this.removeZone.setDepth(-1);
-      console.log(["current flow", this.blockSet.flow]);
+      // console.log(["current flow", this.blockSet.flow]);
     });
   }
 }
