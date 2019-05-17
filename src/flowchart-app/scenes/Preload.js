@@ -27,6 +27,8 @@ import b_input_output_shadow from '@/assets/svg/b-input-output-shadow.svg'
 import b_operation_shadow from '@/assets/svg/b-operation-shadow.svg'
 import b_terminal_shadow from '@/assets/svg/b-terminal-shadow.svg'
 
+import output_lab from '@/assets/svg/output-lab.svg'
+
 import c_clear from '@/assets/svg/c-clear.svg'
 import c_pause from '@/assets/svg/c-pause.svg'
 import c_run from '@/assets/svg/c-run.svg'
@@ -85,8 +87,8 @@ export default class Preload extends Scene {
     
     this.load.image('sign_branch_no', sign_branch_no);
     this.load.image('sign_branch_yes', sign_branch_yes);
-    // load fonts
-    
+
+    this.load.image('output_lab', output_lab)
   }
   create() {
     this.scene.start('Main')

@@ -2,7 +2,6 @@
 import { Scene } from 'phaser'
 // import scenes
 import Editor from './Editor'
-import Controller from './Controller'
 import LabOutput from './LabOutput'
 import LessonOutput from './LessonOutput'
 // import storage state
