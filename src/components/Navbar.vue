@@ -30,7 +30,11 @@
 
       <!-- menu area -->
       <div class="linkmenu">
-        <span v-if="login">ยินดีต้อนรับ</span>
+        <div class="linkitem" v-if="login">
+          <span>{{email}}</span>
+          <span class="link" @click="logout">ออกจากระบบ</span>
+        </div>
+
         <span v-else class="link" @click="openLoginMenu">เข้าสู่ระบบ</span>
       </div>
     </div>
@@ -74,6 +78,12 @@
   .hide-mobile {
     display: none;
   }
+  .linkitem {
+    span {
+      display: inline-block;
+      font-size: 13pt;
+    }
+  }
 }
 @media (min-width: 450px) {
   #nav {
@@ -107,20 +117,40 @@
 </style>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
+
 export default {
   name: "Navbar",
   data() {
     return {
       page: "",
-      login: false
+      login: false,
+      email: ""
     };
   },
   created() {
     // check authentication
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.login = true;
+        this.email = user.email;
+        console.log(user.email);
+      } else {
+        this.login = false;
+      }
+    });
   },
   methods: {
     openLoginMenu() {
-      alert("login menu open here");
+      this.$parent.$refs.login.openLoginForm();
+    },
+    logout() {
+      firebase.auth().signOut().then(() => {
+        console.log('ออกจากระบบสำเร็จ')
+        this.login = false;
+        this.email = ''
+      })
     }
   }
 };
