@@ -159,6 +159,7 @@
 <script>
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 export default {
   name: "LoginForm",
@@ -220,6 +221,9 @@ export default {
           firebase
             .auth()
             .signInWithEmailAndPassword(this.username, this.password)
+            .then(resp => {
+              this.closeLoginForm();
+            })
             .catch(error => {
               var errorCode = error.code;
               var errorMessage = error.message;
@@ -232,7 +236,6 @@ export default {
                 this.error("อีเมล์หรือรหัสผ่านไม่ถูกต้อง");
               }
             });
-          this.closeLoginForm();
         } else {
           //register
           // check matched password
@@ -242,12 +245,35 @@ export default {
             firebase
               .auth()
               .createUserWithEmailAndPassword(this.username, this.password)
+              .then(result => {
+                // add user to db
+                var user = result.user;
+                var db = firebase
+                  .firestore()
+                  .collection("users")
+                  .doc(user.uid);
+
+                db.get().then(document => {
+                  if (!document.exists) {
+                    console.log("no account in db");
+                    db.set({
+                      email: user.email
+                    });
+                  }
+                });
+
+                this.closeLoginForm();
+              })
               .catch(error => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 console.log([errorCode, errorMessage]);
+                if (errorCode === "auth/email-already-in-use") {
+                  this.error("มีผู้ใช้งานอยู่แล้ว");
+                } else {
+                  this.error(errorMessage);
+                }
               });
-            this.closeLoginForm();
           }
         }
       }
@@ -262,6 +288,20 @@ export default {
         .then(result => {
           var token = result.credential.accessToken;
           var user = result.user;
+
+          // add user to db
+          var db = firebase
+            .firestore()
+            .collection("users")
+            .doc(user.uid);
+
+          db.get().then(document => {
+            if (!document.exists) {
+              db.set({
+                email: user.email
+              });
+            }
+          });
           this.closeLoginForm();
         })
         .catch(error => {

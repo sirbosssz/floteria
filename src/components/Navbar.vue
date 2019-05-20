@@ -28,6 +28,34 @@
         </div>
       </div>
 
+      <!-- center area -->
+      <div v-if="lessonNavigator" class="lesson-navigator">
+        <!-- left-arrow -->
+        <img class="arrow-left" src="@/assets/svg/arrow-left.svg" alt>
+        <router-link
+          :to="'/lessons/'+lessonPage"
+          v-if="onLessonPage"
+          class="lesson-navigator-button selected"
+        >เนื้อหาบทเรียน</router-link>
+        <router-link
+          :to="'/lessons/'+lessonPage"
+          v-else
+          class="lesson-navigator-button notselected"
+        >เนื้อหาบทเรียน</router-link>
+        <router-link
+          :key="page"
+          v-for="page in lessonPageList"
+          :to="'/lessons/' + lessonPage + '/' + page"
+          class="nav-btn"
+          style="padding: 0 .2em"
+        >
+          <img v-if="page === currentPage" src="@/assets/svg/nav-btn-current.svg">
+          <img v-else src="@/assets/svg/nav-btn.svg">
+        </router-link>
+
+        <img class="arrow-right" src="@/assets/svg/arrow-right.svg" alt>
+      </div>
+
       <!-- menu area -->
       <div class="linkmenu">
         <div class="linkitem" v-if="login">
@@ -35,7 +63,9 @@
           <span class="link" @click="logout">ออกจากระบบ</span>
         </div>
 
-        <span v-else class="link" @click="openLoginMenu">เข้าสู่ระบบ</span>
+        <div v-else class="linkitem">
+          <span class="link" @click="openLoginMenu">เข้าสู่ระบบ</span>
+        </div>
       </div>
     </div>
   </nav>
@@ -43,6 +73,13 @@
 
 <style lang="scss">
 @import "@/assets/colors.scss";
+.arrow-left,
+.arrow-right,
+.nav-btn img {
+  width: 19px;
+  height: 19px;
+  margin-left: 0.2em;
+}
 
 #nav {
   background: #fff;
@@ -65,14 +102,12 @@
     color: #ef5a37;
   }
   a,
-  .navigator,
   .link {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .logo > div,
-  .linkmenu {
+  .logo > div {
     display: flex;
   }
   .hide-mobile {
@@ -84,6 +119,35 @@
       font-size: 13pt;
     }
   }
+  .linkmenu {
+    display: block;
+    padding-top: 0.5em;
+    text-align: right;
+  }
+  .lesson-navigator {
+    margin-top: 0.5em;
+    padding: 0.3em;
+    background: #ededed;
+    * {
+      cursor: pointer;
+    }
+    .lesson-navigator-button {
+      font-weight: bold;
+      font-size: 13pt;
+      padding: 0.2em 0.5em 0 0.5em;
+      margin: 0 0.2em 0 0.5em;
+      line-height: 1.2em;
+    }
+    .lesson-navigator-button.selected {
+      color: #fff;
+      background: $blue;
+    }
+    .lesson-navigator-button.notselected {
+      color: $blue;
+      background: rgba(0, 0, 0, 0);
+      border: 2px solid $blue;
+    }
+  }
 }
 @media (min-width: 450px) {
   #nav {
@@ -92,25 +156,40 @@
 }
 @media (min-width: 768px) {
   #nav {
+    .home-logo {
+      padding-top: 1.5em;
+    }
+    .lesson-navigator,
+    .navigator {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+@media (min-width: 920px) {
+  #nav {
+    padding: 14px 3em 14px 3em;
+    min-height: 60px;
+    .hide-mobile {
+      display: flex;
+    }
+    a {
+      font-size: 16pt;
+    }
     a,
     .link {
       padding-left: 1em;
       padding-right: 1em;
     }
-    .hide-mobile {
+
+    .linkmenu {
       display: flex;
     }
-    .home-logo {
-      padding-top: 1.5em;
-    }
-  }
-}
-@media (min-width: 1408px) {
-  #nav {
-    padding: 14px 3em 14px 3em;
-    min-height: 60px;
-    a {
-      font-size: 16pt;
+    .lesson-navigator {
+      margin-top: 0;
+      background: #ededed;
+      padding: 0.3em 0;
     }
   }
 }
@@ -126,7 +205,12 @@ export default {
     return {
       page: "",
       login: false,
-      email: ""
+      email: "",
+      lessonNavigator: false,
+      lessonPage: "",
+      onLessonPage: false,
+      lessonPageList: [],
+      currentPage: ""
     };
   },
   created() {
@@ -135,7 +219,7 @@ export default {
       if (user) {
         this.login = true;
         this.email = user.email;
-        console.log(user.email);
+        console.log("current user: " + user.email);
       } else {
         this.login = false;
       }
@@ -146,11 +230,15 @@ export default {
       this.$parent.$refs.login.openLoginForm();
     },
     logout() {
-      firebase.auth().signOut().then(() => {
-        console.log('ออกจากระบบสำเร็จ')
-        this.login = false;
-        this.email = ''
-      })
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          console.log("ออกจากระบบสำเร็จ");
+          this.login = false;
+          this.email = "";
+        });
+      this.$router.push("/");
     }
   }
 };
