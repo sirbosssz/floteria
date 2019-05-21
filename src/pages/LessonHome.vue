@@ -119,6 +119,7 @@
     padding: 0.5em 1.5em 0.3em 1.5em;
     font-size: 14pt;
     color: $blue;
+    min-height: 3.5em;
   }
   img.lesson-icon {
     width: 100%;
@@ -186,6 +187,7 @@ export default {
   created() {
     let navbar = this.$parent.$refs.navbar.$data;
     navbar.page = "lesson";
+    navbar.lessonNavigator = false;
 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {

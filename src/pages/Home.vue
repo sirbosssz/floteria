@@ -55,6 +55,7 @@ export default {
   created() {
     let navbar = this.$parent.$refs.navbar.$data
     navbar.page = 'home'
+    navbar.lessonNavigator = false;
   },
 };
 </script>

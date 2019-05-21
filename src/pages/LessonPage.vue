@@ -89,9 +89,9 @@ export default {
   },
   mounted() {},
   beforeDestroy() {
-    let navbar = this.$parent.$refs.navbar.$data;
-    navbar.lessonNavigator = false;
-    navbar.lessonPage = "";
+    // let navbar = this.$parent.$refs.navbar.$data;
+    // navbar.lessonNavigator = false;
+    // navbar.lessonPage = "";
   }
 };
 </script>

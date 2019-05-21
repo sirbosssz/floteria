@@ -65,7 +65,7 @@ export default {
             snapshot.forEach(doc => {
               pageList.push(doc.id);
               if (doc.id === exercise) {
-                this.exercise = doc.data()
+                this.exercise = doc.data();
               }
             });
           })
@@ -88,12 +88,10 @@ export default {
   },
   beforeDestroy() {
     let navbar = this.$parent.$refs.navbar.$data;
-    navbar.lessonNavigator = false;
-    navbar.lessonPage = "";
+    navbar.currentPage = '';
   },
   beforeRouteUpdate(to, from, next) {
     let navbar = this.$parent.$refs.navbar.$data;
-    let exercise = this.$route.params.exercise;
     navbar.currentPage = to.params.exercise;
     this.loadExercise(to.params.exercise);
     next();

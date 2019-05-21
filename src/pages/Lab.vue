@@ -28,6 +28,7 @@ export default {
   created() {
     let navbar = this.$parent.$refs.navbar.$data
     navbar.page = 'lab'
+    navbar.lessonNavigator = false;
   },
   mounted() {
     //navbar change
