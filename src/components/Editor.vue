@@ -39,7 +39,7 @@ export default {
       parent: this.$el,
       width: width,
       height: height,
-      backgroundColor: 0xeaeaea,
+      backgroundColor: 0xF9F9F9,
       scale: {
         mode: Phaser.Scale.RESIZE
       },

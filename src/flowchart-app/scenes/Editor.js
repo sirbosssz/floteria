@@ -26,6 +26,7 @@ export default class Editor extends Scene {
       .setInteractive();
     this.background.background = true;
     this.input.setDraggable(this.background);
+    console.log(this.background)
     // insert dock menu
     const dockList = [
       // "b_input_normal",
@@ -169,6 +170,7 @@ export default class Editor extends Scene {
     this.input.on("drop", (pointer, object, dropzone) => {
       if (dropzone.type === "remove") {
         // remove object
+        this.removeZone.setDepth(-1);
         this.blockSet.removeChild(object);
         object.remove();
       }
