@@ -39,16 +39,16 @@ import c_stop from "@/assets/svg/c-stop.svg";
 import sign_branch_no from "@/assets/svg/sign-branch-no.svg";
 import sign_branch_yes from "@/assets/svg/sign-branch-yes.svg";
 
-import o_cocoa from '@/assets/svg/o_cocoa.svg';
-import o_cocoa_cup from '@/assets/svg/o_cocoa_cup.svg';
-import o_coffee from '@/assets/svg/o_coffee.svg';
-import o_coffee_cup from '@/assets/svg/o_coffee_cup.svg';
-import o_tea from '@/assets/svg/o_tea.svg';
-import o_tea_cup from '@/assets/svg/o_tea_cup.svg';
-import o_bread from '@/assets/svg/o_bread.svg';
-import o_cookies from '@/assets/svg/o_cookies.svg';
-import o_croissant from '@/assets/svg/o_croissant.svg';
-import o_textbox from '@/assets/svg/o_textbox.svg';
+import o_cocoa from "@/assets/svg/o_cocoa.svg";
+import o_cocoa_cup from "@/assets/svg/o_cocoa_cup.svg";
+import o_coffee from "@/assets/svg/o_coffee.svg";
+import o_coffee_cup from "@/assets/svg/o_coffee_cup.svg";
+import o_tea from "@/assets/svg/o_tea.svg";
+import o_tea_cup from "@/assets/svg/o_tea_cup.svg";
+import o_bread from "@/assets/svg/o_bread.svg";
+import o_cookies from "@/assets/svg/o_cookies.svg";
+import o_croissant from "@/assets/svg/o_croissant.svg";
+import o_textbox from "@/assets/svg/o_textbox.svg";
 
 // for Preload: load everything and move to Main Scene
 export default class Preload extends Scene {
@@ -104,17 +104,21 @@ export default class Preload extends Scene {
     this.load.image("output_lab", output_lab);
     this.load.image("output_lesson", output_lesson);
 
-    this.load.image('o_cocoa', o_cocoa);
-    this.load.image('o_cocoa_cup', o_cocoa_cup);
-    this.load.image('o_coffee', o_coffee);
-    this.load.image('o_coffee_cup', o_coffee_cup);
-    this.load.image('o_tea', o_tea);
-    this.load.image('o_tea_cup', o_tea_cup);
-    this.load.image('o_bread', o_bread);
-    this.load.image('o_cookies', o_cookies);
-    this.load.image('o_croissant', o_croissant);
-    this.load.image('o_textbox', o_textbox);
+    this.load.image("o_cocoa", o_cocoa);
+    this.load.image("o_cocoa_cup", o_cocoa_cup);
+    this.load.image("o_coffee", o_coffee);
+    this.load.image("o_coffee_cup", o_coffee_cup);
+    this.load.image("o_tea", o_tea);
+    this.load.image("o_tea_cup", o_tea_cup);
+    this.load.image("o_bread", o_bread);
+    this.load.image("o_cookies", o_cookies);
+    this.load.image("o_croissant", o_croissant);
+    this.load.image("o_textbox", o_textbox);
 
+    this.load.script(
+      "webfont",
+      "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
+    );
   }
   create() {
     this.scene.start("Main");

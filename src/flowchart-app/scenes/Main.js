@@ -55,7 +55,7 @@ export default class Main extends Scene {
         {
           key: "editor",
           x: outputSize,
-          y: 80,
+          y: 60,
           width: outputSize + this.game.config.width,
           height: this.game.config.height
         },
@@ -67,8 +67,8 @@ export default class Main extends Scene {
         {
           key: "instruction",
           x: outputSize,
-          y: 10,
-          width: this.game.config.width - outputSize - 10,
+          y: 0,
+          width: this.game.config.width - outputSize,
           height: 60
         },
         Instruction

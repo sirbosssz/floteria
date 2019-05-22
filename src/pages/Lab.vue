@@ -1,14 +1,15 @@
 <template>
   <div class="labpage">
     <div ref="editor">
-      <Editor type="lab"/>
+      <Editor type="lab" key='lab'/>
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .labpage {
-  height: 100vh;
+  min-height: 100vh;
+  height: 1080px;
   div {
     position: static;
     display: flex;
