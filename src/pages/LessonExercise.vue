@@ -8,8 +8,7 @@
 
 <style lang="scss">
 .lesson-exercise {
-  min-height: 100vh;
-  height: 1080px;
+  height: 100vh;
   div {
     position: static;
     display: flex;

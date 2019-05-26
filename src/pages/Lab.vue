@@ -8,8 +8,7 @@
 
 <style lang="scss">
 .labpage {
-  min-height: 100vh;
-  height: 1080px;
+  height: 100vh;
   div {
     position: static;
     display: flex;
@@ -35,8 +34,8 @@ export default {
     //navbar change
     let navbar = this.$parent.$refs.navbar.$el;
     let editor = this.$el;
-    let height = editor.clientHeight - navbar.clientHeight - 1;
-    editor.style.height = height + "px";
+    let height = editor.clientHeight - navbar.clientHeight;
+    // editor.style.height = height + "px";
   }
 };
 </script>

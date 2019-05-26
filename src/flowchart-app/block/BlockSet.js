@@ -45,6 +45,14 @@ export default class BlockSet {
       x: this.flow[0].x,
       y: this.flow[0].y
     };
+    this.moveFlow(baseLocation.x, baseLocation.y);
+  }
+
+  moveFlow(x, y) {
+    let baseLocation = {
+      x: x,
+      y: y
+    };
     this.flow.forEach(block => {
       // check if not last block of flow
       if (this.getFlowIndex(block) + 1 !== this.flow.length) {
@@ -55,30 +63,10 @@ export default class BlockSet {
       }
       // begin reposition
       block.moveTo(baseLocation.x, baseLocation.y);
-
-      if (block.textureIndex == 4) {
-        baseLocation.y += block.height - 4 + 50;
+      if (block.arrow) {
+        baseLocation.y += block.height + block.arrow.height;
       } else {
-        baseLocation.y += block.height - 4;
-      }
-    });
-  }
-
-  moveFlow(x, y, object) {
-    // console.log(['move flow to: ', x, y, this.flow])
-    let objectIndex = this.getFlowIndex(object);
-    // find base location from index
-
-    let baseLocation = {
-      x: x,
-      y: y
-    };
-    this.flow.forEach(block => {
-      block.moveTo(baseLocation.x, baseLocation.y);
-      if (block.textureIndex == 4) {
-        baseLocation.y += block.height - 4 + 50;
-      } else {
-        baseLocation.y += block.height - 4;
+        baseLocation.y += block.height;
       }
     });
   }

@@ -29,11 +29,7 @@ export default class Editor extends Scene {
     // insert dock menu
     let dockList = [
       "b_input_normal",
-      "b_input_normal",
       "b_output_normal",
-      "b_output_normal",
-      "b_output_normal",
-      "b_operation_normal",
       "b_operation_normal",
       "b_condition_normal",
       "b_while_normal",
@@ -42,18 +38,7 @@ export default class Editor extends Scene {
     let dockCommand = [
       {
         type: "input",
-        text: "ข้อความ",
-        var: "text"
-      },
-      {
-        type: "input",
-        text: "ตัวเลข",
-        var: "num"
-      },
-      {
-        type: "output",
-        text: "แสดงข้อความ Hello!",
-        var: "text_hello"
+        text: "รับค่า/ข้อความ",
       },
       {
         type: "output",
@@ -61,29 +46,20 @@ export default class Editor extends Scene {
         var: "text"
       },
       {
-        type: "output",
-        text: "แสดงผลตัวเลข",
-        var: "num"
-      },
-      {
         type: "operation",
-        text: "เปลี่ยนข้อความเป็น Hi!"
-      },
-      {
-        type: "operation",
-        text: "บวกเลขเพิ่มทีละ 1"
+        text: "ตัวดำเนินการแบบลำดับ"
       },
       {
         type: "condition",
-        text: "ถ้าเลขมีค่า มากกว่า 0"
+        text: "ประมวลผลแบบเงื่อนไข"
       },
       {
         type: "while",
-        text: "วนจนกว่าเลขจะมีค่า มากกว่า 0"
+        text: "วนซ้ำตามเงื่อนไข"
       },
       {
         type: "loop_times",
-        text: "วนซ้ำ 10 รอบ"
+        text: "วนซ้ำตามจำนวนรอบ"
       }
     ];
 
@@ -120,7 +96,7 @@ export default class Editor extends Scene {
     dock.fillStyle(0xd8d8d8, 1);
     dock.fillRect(this.parent.x, this.parent.y, 150, this.parent.height);
 
-    let dockY = this.parent.y;
+    let dockY = this.parent.y + 20;
     let index = 0;
     dockList.forEach(block => {
       let block_menu = new Block(this, this.parent.x + 75, dockY, block)
@@ -131,12 +107,11 @@ export default class Editor extends Scene {
       block_menu.setFlowData(dockCommand[index++]);
       // block_menu.setCommand(dockMenuList[index]);
       this.input.setDraggable(block_menu);
-      dockY += block_menu.block.height + 20;
+      dockY += block_menu.height + 20;
     });
 
     this.blockSet = new BlockSet(this);
     this.id = 0;
-    let flow = [];
     let starter1 = new Block(
       this,
       this.parent.x + 400,
@@ -159,7 +134,7 @@ export default class Editor extends Scene {
     let starter2 = new Block(
       this,
       this.parent.x + 400,
-      this.parent.y + 100 + starter1.block.height + starter1.arrow.height,
+      this.parent.y + 100 + starter1.height + starter1.arrow.height,
       "b_terminal_normal"
     )
       .setOrigin(0.5, 0)
@@ -219,7 +194,7 @@ export default class Editor extends Scene {
           object.removeArrow();
         }
       } else if (object.type === "terminal") {
-        this.blockSet.moveFlow(dragX, dragY, object);
+        this.blockSet.moveFlow(dragX, dragY);
       } else if (object.background) {
       }
     });

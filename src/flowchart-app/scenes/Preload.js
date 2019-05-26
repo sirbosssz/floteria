@@ -2,6 +2,7 @@
 import { Scene } from "phaser";
 // import assets
 import arrow_normal from "@/assets/svg/arrow-normal.svg";
+import arrow_branch from "@/assets/svg/arrow-branch.svg";
 import arrow_powered from "@/assets/svg/arrow-powered.svg";
 import arrow_shadow from "@/assets/svg/arrow-shadow.svg";
 
@@ -60,6 +61,7 @@ export default class Preload extends Scene {
     // load everything here
     // load blocks
     this.load.image("arrow_normal", arrow_normal);
+    this.load.image("arrow_branch", arrow_branch);
     this.load.image("arrow_powered", arrow_powered);
     this.load.image("arrow_shadow", arrow_shadow);
 
