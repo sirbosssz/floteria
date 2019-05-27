@@ -78,9 +78,6 @@ export default {
             width: width,
             height: height,
             backgroundColor: 0xf9f9f9,
-            scale: {
-              mode: Phaser.Scale.RESIZE
-            },
             physics: {
               default: "arcade",
               arcade: {
@@ -109,9 +106,6 @@ export default {
         width: width,
         height: height,
         backgroundColor: 0xf9f9f9,
-        scale: {
-          mode: Phaser.Scale.RESIZE
-        },
         physics: {
           default: "arcade",
           arcade: {

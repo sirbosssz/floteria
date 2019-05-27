@@ -54,12 +54,11 @@ export default class BlockSet {
         }
       }
       // begin reposition
-      block.moveTo(baseLocation.x, baseLocation.y);
-
-      if (block.textureIndex == 4) {
-        baseLocation.y += block.height - 4 + 50;
+      block.moveTo(baseLocation.x, baseLocation.y + block.height / 2);
+      if (block.arrow && block.arrow !== null) {
+        baseLocation.y += block.height + block.arrow.height;
       } else {
-        baseLocation.y += block.height - 4;
+        baseLocation.y += block.height;
       }
     });
   }
@@ -74,11 +73,19 @@ export default class BlockSet {
       y: y
     };
     this.flow.forEach(block => {
-      block.moveTo(baseLocation.x, baseLocation.y);
-      if (block.textureIndex == 4) {
-        baseLocation.y += block.height - 4 + 50;
+      // check if not last block of flow
+      if (this.getFlowIndex(block) + 1 !== this.flow.length) {
+        // check if not have arrow, generate them
+        if (!block.arrow || block.arrow === null) {
+          block.addArrow(this.scene);
+        }
+      }
+      // begin reposition
+      block.moveTo(baseLocation.x, baseLocation.y + block.height / 2);
+      if (block.arrow && block.arrow !== null) {
+        baseLocation.y += block.height + block.arrow.height;
       } else {
-        baseLocation.y += block.height - 4;
+        baseLocation.y += block.height;
       }
     });
   }

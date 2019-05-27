@@ -1,31 +1,35 @@
 // import phaser class(es)
 import { Scene } from "phaser";
 // import assets
-import arrow_normal from "@/assets/svg/arrow-normal.svg";
-import arrow_powered from "@/assets/svg/arrow-powered.svg";
-import arrow_shadow from "@/assets/svg/arrow-shadow.svg";
+import arrow_normal from "@/assets/svg/arrow_normal.svg";
 
-import b_condition_normal from "@/assets/svg/b-condition-normal.svg";
-import b_connector_normal from "@/assets/svg/b-connector-normal.svg";
-import b_for_normal from "@/assets/svg/b-for-normal.svg";
-import b_input_normal from "@/assets/svg/b-input-normal.svg";
-import b_operation_normal from "@/assets/svg/b-operation-normal.svg";
-import b_output_normal from "@/assets/svg/b-output-normal.svg";
-import b_terminal_normal from "@/assets/svg/b-terminal-normal.svg";
-import b_while_normal from "@/assets/svg/b-while-normal.svg";
+import block_start from "@/assets/svg/block_start.svg";
+import block_start_hover from "@/assets/svg/block_start_hover.svg";
+import block_end from "@/assets/svg/block_end.svg";
+import block_end_hover from "@/assets/svg/block_end_hover.svg";
 
-import b_condition_hover from "@/assets/svg/b-condition-hover.svg";
-import b_for_hover from "@/assets/svg/b-for-hover.svg";
-import b_input_hover from "@/assets/svg/b-input-hover.svg";
-import b_operation_hover from "@/assets/svg/b-operation-hover.svg";
-import b_output_hover from "@/assets/svg/b-output-hover.svg";
-import b_terminal_hover from "@/assets/svg/b-terminal-hover.svg";
-import b_while_hover from "@/assets/svg/b-while-hover.svg";
+import block_order_dessert from "@/assets/svg/block_order_dessert.svg";
+import block_order_dessert_hover from "@/assets/svg/block_order_dessert_hover.svg";
+import block_order_drink from "@/assets/svg/block_order_drink.svg";
+import block_order_drink_hover from "@/assets/svg/block_order_drink_hover.svg";
+import block_ask_order from "@/assets/svg/block_ask_order.svg";
+import block_ask_order_hover from "@/assets/svg/block_ask_order_hover.svg";
+import block_count_customer from "@/assets/svg/block_count_customer.svg";
+import block_count_customer_hover from "@/assets/svg/block_count_customer_hover.svg";
 
-import b_decision_shadow from "@/assets/svg/b-decision-shadow.svg";
-import b_input_output_shadow from "@/assets/svg/b-input-output-shadow.svg";
-import b_operation_shadow from "@/assets/svg/b-operation-shadow.svg";
-import b_terminal_shadow from "@/assets/svg/b-terminal-shadow.svg";
+import block_serve_dessert from "@/assets/svg/block_serve_dessert.svg";
+import block_serve_dessert_hover from "@/assets/svg/block_serve_dessert_hover.svg";
+import block_serve_drink from "@/assets/svg/block_serve_drink.svg";
+import block_serve_drink_hover from "@/assets/svg/block_serve_drink_hover.svg";
+import block_tell_price from "@/assets/svg/block_tell_price.svg";
+import block_tell_price_hover from "@/assets/svg/block_tell_price_hover.svg";
+
+import block_dessert_price from "@/assets/svg/block_dessert_price.svg";
+import block_dessert_price_hover from "@/assets/svg/block_dessert_price_hover.svg";
+import block_drink_price from "@/assets/svg/block_drink_price.svg";
+import block_drink_price_hover from "@/assets/svg/block_drink_price_hover.svg";
+import block_combine_price from "@/assets/svg/block_combine_price.svg";
+import block_combine_price_hover from "@/assets/svg/block_combine_price_hover.svg";
 
 import output_lab from "@/assets/svg/output-lab.svg";
 import output_lesson from "@/assets/svg/output-lesson.svg";
@@ -35,9 +39,6 @@ import c_pause from "@/assets/svg/c-pause.svg";
 import c_run from "@/assets/svg/c-run.svg";
 import c_step from "@/assets/svg/c-step.svg";
 import c_stop from "@/assets/svg/c-stop.svg";
-
-import sign_branch_no from "@/assets/svg/sign-branch-no.svg";
-import sign_branch_yes from "@/assets/svg/sign-branch-yes.svg";
 
 import o_cocoa from "@/assets/svg/o_cocoa.svg";
 import o_cocoa_cup from "@/assets/svg/o_cocoa_cup.svg";
@@ -60,46 +61,40 @@ export default class Preload extends Scene {
     // load everything here
     // load blocks
     this.load.image("arrow_normal", arrow_normal);
-    this.load.image("arrow_powered", arrow_powered);
-    this.load.image("arrow_shadow", arrow_shadow);
 
-    this.load.image("b_condition_hover", b_condition_hover);
-    this.load.image("b_condition_normal", b_condition_normal);
+    this.load.image("block_start", block_start);
+    this.load.image("block_start_hover", block_start_hover);
+    this.load.image("block_end", block_end);
+    this.load.image("block_end_hover", block_end_hover);
 
-    this.load.image("b_connector_normal", b_connector_normal);
+    this.load.image("block_order_dessert", block_order_dessert);
+    this.load.image("block_order_dessert_hover", block_order_dessert_hover);
+    this.load.image("block_order_drink", block_order_drink);
+    this.load.image("block_order_drink_hover", block_order_drink_hover);
+    this.load.image("block_ask_order", block_ask_order);
+    this.load.image("block_ask_order_hover", block_ask_order_hover);
+    this.load.image("block_count_customer", block_count_customer);
+    this.load.image("block_count_customer_hover", block_count_customer_hover);
 
-    this.load.image("b_decision_shadow", b_decision_shadow);
+    this.load.image("block_serve_dessert", block_serve_dessert);
+    this.load.image("block_serve_dessert_hover", block_serve_dessert_hover);
+    this.load.image("block_serve_drink", block_serve_drink);
+    this.load.image("block_serve_drink_hover", block_serve_drink_hover);
+    this.load.image("block_tell_price", block_tell_price);
+    this.load.image("block_tell_price_hover", block_tell_price_hover);
 
-    this.load.image("b_for_hover", b_for_hover);
-    this.load.image("b_for_normal", b_for_normal);
-
-    this.load.image("b_input_hover", b_input_hover);
-    this.load.image("b_input_normal", b_input_normal);
-
-    this.load.image("b_input_output_shadow", b_input_output_shadow);
-
-    this.load.image("b_operation_hover", b_operation_hover);
-    this.load.image("b_operation_normal", b_operation_normal);
-    this.load.image("b_operation_shadow", b_operation_shadow);
-
-    this.load.image("b_output_hover", b_output_hover);
-    this.load.image("b_output_normal", b_output_normal);
-
-    this.load.image("b_terminal_hover", b_terminal_hover);
-    this.load.image("b_terminal_normal", b_terminal_normal);
-    this.load.image("b_terminal_shadow", b_terminal_shadow);
-
-    this.load.image("b_while_hover", b_while_hover);
-    this.load.image("b_while_normal", b_while_normal);
+    this.load.image("block_dessert_price", block_dessert_price);
+    this.load.image("block_dessert_price_hover", block_dessert_price_hover);
+    this.load.image("block_drink_price", block_drink_price);
+    this.load.image("block_drink_price_hover", block_drink_price_hover);
+    this.load.image("block_combine_price", block_combine_price);
+    this.load.image("block_combine_price_hover", block_combine_price_hover);
 
     this.load.image("c_clear", c_clear);
     this.load.image("c_pause", c_pause);
     this.load.image("c_run", c_run);
     this.load.image("c_step", c_step);
     this.load.image("c_stop", c_stop);
-
-    this.load.image("sign_branch_no", sign_branch_no);
-    this.load.image("sign_branch_yes", sign_branch_yes);
 
     this.load.image("output_lab", output_lab);
     this.load.image("output_lesson", output_lesson);

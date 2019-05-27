@@ -26,80 +26,6 @@ export default class Editor extends Scene {
       .setInteractive();
     this.background.background = true;
     this.input.setDraggable(this.background);
-    // insert dock menu
-    let dockList = [
-      "b_input_normal",
-      "b_input_normal",
-      "b_output_normal",
-      "b_output_normal",
-      "b_output_normal",
-      "b_operation_normal",
-      "b_operation_normal",
-      "b_condition_normal",
-      "b_while_normal",
-      "b_for_normal"
-    ];
-    let dockCommand = [
-      {
-        type: "input",
-        text: "ข้อความ",
-        var: "text"
-      },
-      {
-        type: "input",
-        text: "ตัวเลข",
-        var: "num"
-      },
-      {
-        type: "output",
-        text: "แสดงข้อความ Hello!",
-        var: "text_hello"
-      },
-      {
-        type: "output",
-        text: "แสดงผลข้อความ",
-        var: "text"
-      },
-      {
-        type: "output",
-        text: "แสดงผลตัวเลข",
-        var: "num"
-      },
-      {
-        type: "operation",
-        text: "เปลี่ยนข้อความเป็น Hi!"
-      },
-      {
-        type: "operation",
-        text: "บวกเลขเพิ่มทีละ 1"
-      },
-      {
-        type: "condition",
-        text: "ถ้าเลขมีค่า มากกว่า 0"
-      },
-      {
-        type: "while",
-        text: "วนจนกว่าเลขจะมีค่า มากกว่า 0"
-      },
-      {
-        type: "loop_times",
-        text: "วนซ้ำ 10 รอบ"
-      }
-    ];
-
-    if (
-      storage.exerciseData.dockCommand ||
-      storage.exerciseData.dockCommand !== undefined
-    ) {
-      dockCommand = storage.exerciseData.dockCommand;
-    }
-
-    if (
-      storage.exerciseData.dockList ||
-      storage.exerciseData.dockList !== undefined
-    ) {
-      dockList = storage.exerciseData.dockList;
-    }
 
     // remove block zone
     this.removeZone = this.add
@@ -115,6 +41,74 @@ export default class Editor extends Scene {
     this.removeZone.input.dropZone = true;
     this.removeZone.type = "remove";
 
+    // dock command list
+    let command = [
+      {
+        type: "input",
+        text: "รับออร์เดอร์ของหวาน",
+        var: "ของหวาน",
+        graphic: "block_order_dessert"
+      },
+      {
+        type: "input",
+        text: "รับออร์เดอร์เครื่องดื่ม",
+        var: "เครื่องดื่ม",
+        graphic: "block_order_drink"
+      },
+      {
+        type: "input",
+        text: "ถามลูกค้าว่าจะรับออร์เดอร์อะไร",
+        var: "ออร์เดอร์",
+        graphic: "block_ask_order"
+      },
+      {
+        type: "input",
+        text: "ถามจำนวนลูกค้า",
+        var: "จำนวนลูกค้า",
+        graphic: "block_count_customer"
+      },
+      {
+        type: "output",
+        text: "เสิร์ฟของหวาน",
+        var: "ของหวาน",
+        graphic: "block_serve_dessert"
+      },
+      {
+        type: "output",
+        text: "เสิร์ฟเครื่องดื่ม",
+        var: "เครื่องดื่ม",
+        graphic: "block_serve_drink"
+      },
+      {
+        type: "output",
+        text: "บอกราคา",
+        var: "ราคา",
+        graphic: "block_tell_price"
+      },
+      {
+        type: "operation",
+        text: "กำหนดราคาของหวาน",
+        var: "ราคาของหวาน",
+        graphic: "block_dessert_price"
+      },
+      {
+        type: "operation",
+        text: "กำหนดราคาเครื่องดื่ม",
+        var: "ราคาเครื่องดื่ม",
+        graphic: "block_drink_price"
+      },
+      {
+        type: "operation",
+        text: "รวมราคาของหวาน + เครื่องดื่ม",
+        var: "ราคา",
+        graphic: "block_combine_price"
+      }
+    ];
+
+    if (storage.exerciseData.command && storage.exerciseData.command !== undefined) {
+      command = storage.exerciseData.command
+    }
+
     // dock zone
     const dock = this.add.graphics();
     dock.fillStyle(0xd8d8d8, 1);
@@ -122,16 +116,16 @@ export default class Editor extends Scene {
 
     let dockY = this.parent.y;
     let index = 0;
-    dockList.forEach(block => {
-      let block_menu = new Block(this, this.parent.x + 75, dockY, block)
-        .setOrigin(0.5, 0)
+    command.forEach(block => {
+      let block_menu = new Block(this, this.parent.x, dockY, block.graphic)
+        .setOrigin(0.5)
         .setInteractive();
+      block_menu.moveTo(this.parent.x + 75, dockY + 20 + block_menu.height / 2);
       block_menu.onDock = true;
       block_menu.index = index;
-      block_menu.setFlowData(dockCommand[index++]);
-      // block_menu.setCommand(dockMenuList[index]);
+      block_menu.setFlowData(block);
       this.input.setDraggable(block_menu);
-      dockY += block_menu.block.height + 20;
+      dockY += block_menu.height + 20;
     });
 
     this.blockSet = new BlockSet(this);
@@ -141,14 +135,14 @@ export default class Editor extends Scene {
       this,
       this.parent.x + 400,
       this.parent.y + 100,
-      "b_terminal_normal"
+      "block_start"
     )
-      .setOrigin(0.5, 0)
+      .setOrigin(0.5)
       .setInteractive();
     starter1.flowData = {
-      type: "start"
+      type: "start",
+      graphic: "block_start"
     };
-    starter1.setCommand("START");
     starter1.addArrow(this);
     starter1.id = this.id++;
     starter1.type = "terminal";
@@ -159,15 +153,15 @@ export default class Editor extends Scene {
     let starter2 = new Block(
       this,
       this.parent.x + 400,
-      this.parent.y + 100 + starter1.block.height + starter1.arrow.height,
-      "b_terminal_normal"
+      this.parent.y + 100 + starter1.height + starter1.arrow.height,
+      "block_end"
     )
-      .setOrigin(0.5, 0)
+      .setOrigin(0.5)
       .setInteractive();
     starter2.flowData = {
-      type: "end"
+      type: "end",
+      graphic: "block_end"
     };
-    starter2.setCommand("END");
     starter2.id = this.id++;
     starter2.type = "terminal";
     this.blockSet.addChild(starter2);
@@ -186,9 +180,9 @@ export default class Editor extends Scene {
             this,
             object.x,
             object.y,
-            dockList[object.index]
+            object.flowData.graphic
           )
-            .setOrigin(0.5, 0)
+            .setOrigin(0.5)
             .setInteractive();
           newBlockMenu.onDock = true;
           newBlockMenu.index = object.index;
@@ -203,7 +197,6 @@ export default class Editor extends Scene {
         }
         this.removeZone.setDepth(1);
         object.setDepth(5);
-        object.text.setDepth(5);
         this.children.bringToTop(object);
         this.children.bringToTop(object.text);
       }
@@ -240,7 +233,6 @@ export default class Editor extends Scene {
         this.blockSet.flowReposition();
       }
       object.setDepth(2);
-      object.text.setDepth(2);
     });
 
     this.input.on("dragend", (pointer, object, dropped) => {
