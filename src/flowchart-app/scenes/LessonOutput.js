@@ -108,22 +108,52 @@ export default class LessonOutput extends Scene {
         console.log(this.var[block.var]);
         switch (this.var[block.var]) {
           case "ขนมปัง":
-            this.spawnItem('o_bread');
+            this.spawnItem("o_bread");
             break;
           case "ครัวซองค์":
-            this.spawnItem('o_croissant');
+            this.spawnItem("o_croissant");
             break;
           case "คุ๊กกี้":
-            this.spawnItem('o_cookies');
+            this.spawnItem("o_cookies");
             break;
           case "กาแฟ":
-            this.spawnItem('o_coffee');
+            this.spawnItem("o_coffee");
             break;
           case "โกโก้":
-            this.spawnItem('o_cocoa');
+            this.spawnItem("o_cocoa");
             break;
           case "ชา":
-            this.spawnItem('o_tea');
+            this.spawnItem("o_tea");
+            break;
+          case "ราคา":
+            if (this.var["ราคา_ของหวาน"] && this.var["ราคา_เครื่องดื่ม"]) {
+            }
+            break;
+          case "ราคา_ของหวาน":
+            if (this.var[block.var]) {
+              switch (this.var["ของหวาน"]) {
+                case "ขนมปัง":
+                  this.showTextbox(`ราคาทั้งหมด ${this.var[block.var].bread}`);
+                  break;
+                case "ครัวซองค์":
+                  this.showTextbox(
+                    `ราคาทั้งหมด ${this.var[block.var].croissant}`
+                  );
+                  break;
+                case "คุ๊กกี้":
+                  this.showTextbox(
+                    `ราคาทั้งหมด ${this.var[block.var].cookies}`
+                  );
+                  break;
+                default:
+                  break;
+              }
+            } else {
+              this.showTextbox("คำสั่งไม่ถูกต้อง ยกเลิกการทำงานของโปรแกรม");
+              this.flowIndex = 0;
+              this.caseIndex = 0;
+              this.var = [];
+            }
             break;
           default:
             this.howTextbox("เมนูนี้ไม่ได้สั่งไว้");
@@ -131,6 +161,31 @@ export default class LessonOutput extends Scene {
         }
         console.log("case " + this.caseIndex + ": passed");
         this.caseIndex++;
+      } else if (block.type === "operation") {
+        this.var[block.var] = "";
+        this.showTextbox("กำหนดตัวแปร " + block.var);
+        if (block.var === "ราคา") {
+          this.var[block.var] = {
+            bread: 40,
+            croissant: 45,
+            cookies: 50,
+            coffee: 75,
+            cocoa: 65,
+            tea: 70
+          };
+        } else if (block.var === "ราคา_ของหวาน") {
+          this.var[block.var] = {
+            bread: 40,
+            croissant: 45,
+            cookies: 50
+          };
+        } else if (block.var === "ราคา_เครื่องดื่ม") {
+          this.var[block.var] = {
+            coffee: 75,
+            cocoa: 65,
+            tea: 70
+          };
+        }
       } else {
         console.log("case " + this.caseIndex + ": not passed");
         this.showTextbox("คำสั่งไม่ถูกต้อง ยกเลิกการทำงานของโปรแกรม");
