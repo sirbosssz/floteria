@@ -70,6 +70,7 @@ export default {
     img {
       object-fit: cover;
       height: 35vh;
+      max-height: 300px;
     }
   }
 }

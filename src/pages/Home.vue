@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <Navbar page="home"/>
     <section class="hero">
       <div class="hero-body">
         <div class="container">
@@ -41,18 +40,23 @@ export default {
         lab: {
           title: "แลปทดลอง",
           description: "ห้องสำหรับทดลองเขียนโปรแกรมอย่างอิสระจากคำสั่งพื้นฐาน",
-          iconURL: "",
+          iconURL: "/img/card/labcard.svg",
           link: "/lab"
         },
         lessons: {
           title: "บทเรียนเบื้องต้น",
           description: "ฝึกเขียนโปรแกรมขั้นพื้นฐานจากบทเรียนและมินิเกมในร้านเบเกอรี่",
-          iconURL: "",
+          iconURL: "/img/card/lessoncard.svg",
           link: "/lessons"
         }
       }
     };
-  }
+  },
+  created() {
+    let navbar = this.$parent.$refs.navbar.$data
+    navbar.page = 'home'
+    navbar.lessonNavigator = false;
+  },
 };
 </script>
 
@@ -97,6 +101,7 @@ export default {
 @media (min-width: 768px) {
   .hero {
     padding: 1em 0 1em 0;
+    margin-top: -1em;
   }
   .home-title {
     font-size: 30pt;
