@@ -102,11 +102,36 @@ export default class Editor extends Scene {
         text: "รวมราคาของหวาน + เครื่องดื่ม",
         var: "ราคา",
         graphic: "block_combine_price"
+      },
+      {
+        type: "condition",
+        text: "รายการที่รับคือของหวานหรือไม่",
+        var: "ออร์เดอร์",
+        graphic: "block_condition_isdessert",
+        yes: [
+          {
+            type: "input",
+            text: "รับออร์เดอร์ของหวาน",
+            var: "ของหวาน",
+            graphic: "block_order_dessert"
+          }
+        ],
+        no: [
+          {
+            type: "input",
+            text: "รับออร์เดอร์เครื่องดื่ม",
+            var: "เครื่องดื่ม",
+            graphic: "block_order_drink"
+          }
+        ]
       }
     ];
 
-    if (storage.exerciseData.command && storage.exerciseData.command !== undefined) {
-      command = storage.exerciseData.command
+    if (
+      storage.exerciseData.command &&
+      storage.exerciseData.command !== undefined
+    ) {
+      command = storage.exerciseData.command;
     }
 
     // dock zone
@@ -199,6 +224,10 @@ export default class Editor extends Scene {
         object.setDepth(5);
         this.children.bringToTop(object);
         this.children.bringToTop(object.text);
+      }
+      console.log(object.flowData)
+      if (object.flowData.type === "condition") {
+        object.setTexture(object.flowData.graphic + "_full");
       }
       this.blockSet.removeChildHoverExcept(object);
     });

@@ -6,7 +6,7 @@
       <!-- in home page -->
       <div class="logo">
         <div v-if="page === 'lesson'">
-          <router-link to="/">
+          <router-link to="/lessons">
             <img src="@/assets/svg/logo-lesson.svg" alt="Logo" width="194">
           </router-link>
           <router-link class="hide-mobile" to="/">หน้าแรก</router-link>
@@ -14,7 +14,7 @@
         </div>
         <!-- in lab page -->
         <div v-else-if="page === 'lab'">
-          <router-link to="/">
+          <router-link to="/lab">
             <img src="@/assets/svg/logo-lab.svg" alt="Logo" width="158">
           </router-link>
           <router-link class="hide-mobile" to="/">หน้าแรก</router-link>

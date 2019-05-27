@@ -78,6 +78,9 @@ export default {
             width: width,
             height: height,
             backgroundColor: 0xf9f9f9,
+            scale: {
+              mode: Phaser.Scale.RESIZE
+            },
             physics: {
               default: "arcade",
               arcade: {
@@ -106,6 +109,9 @@ export default {
         width: width,
         height: height,
         backgroundColor: 0xf9f9f9,
+        scale: {
+          mode: Phaser.Scale.RESIZE
+        },
         physics: {
           default: "arcade",
           arcade: {
@@ -126,6 +132,7 @@ export default {
     }
   },
   beforeDestroy() {
+    storage = null;
     this.app.destroy(true);
     console.clear();
     console.log(

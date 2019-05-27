@@ -31,6 +31,13 @@ import block_drink_price_hover from "@/assets/svg/block_drink_price_hover.svg";
 import block_combine_price from "@/assets/svg/block_combine_price.svg";
 import block_combine_price_hover from "@/assets/svg/block_combine_price_hover.svg";
 
+import block_condition_isdessert from "@/assets/svg/block_condition_isdessert.svg";
+import block_condition_isdessert_hover from "@/assets/svg/block_condition_isdessert_hover.svg";
+import block_condition_isdessert_full from "@/assets/svg/block_condition_isdessert_full.svg";
+import block_condition_price from "@/assets/svg/block_condition_price.svg";
+import block_condition_price_hover from "@/assets/svg/block_condition_price_hover.svg";
+import block_condition_price_full from "@/assets/svg/block_condition_price_full.svg";
+
 import output_lab from "@/assets/svg/output-lab.svg";
 import output_lesson from "@/assets/svg/output-lesson.svg";
 
@@ -90,6 +97,13 @@ export default class Preload extends Scene {
     this.load.image("block_combine_price", block_combine_price);
     this.load.image("block_combine_price_hover", block_combine_price_hover);
 
+    this.load.image("block_condition_isdessert", block_condition_isdessert);
+    this.load.image("block_condition_isdessert_hover", block_condition_isdessert_hover);
+    this.load.image("block_condition_isdessert_full", block_condition_isdessert_full);
+    this.load.image("block_condition_price", block_condition_price);
+    this.load.image("block_condition_price_hover", block_condition_price_hover);
+    this.load.image("block_condition_price_full", block_condition_price_full);
+
     this.load.image("c_clear", c_clear);
     this.load.image("c_pause", c_pause);
     this.load.image("c_run", c_run);
@@ -100,14 +114,14 @@ export default class Preload extends Scene {
     this.load.image("output_lesson", output_lesson);
 
     this.load.image("o_cocoa", o_cocoa);
-    this.load.image("o_cocoa_cup", o_cocoa_cup);
+    this.load.image("โกโก้", o_cocoa_cup);
     this.load.image("o_coffee", o_coffee);
-    this.load.image("o_coffee_cup", o_coffee_cup);
-    this.load.image("o_tea", o_tea);
+    this.load.image("กาแฟ", o_coffee_cup);
+    this.load.image("ชา", o_tea);
     this.load.image("o_tea_cup", o_tea_cup);
-    this.load.image("o_bread", o_bread);
-    this.load.image("o_cookies", o_cookies);
-    this.load.image("o_croissant", o_croissant);
+    this.load.image("ขนมปัง", o_bread);
+    this.load.image("คุ๊กกี้", o_cookies);
+    this.load.image("ครัวซองค์", o_croissant);
     this.load.image("o_textbox", o_textbox);
 
     this.load.script(
