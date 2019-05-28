@@ -62,7 +62,7 @@ export default class LabOutput extends Scene {
 
     // run button
     const run_button = this.add
-      .sprite(this.monitor.x, this.monitor.y + this.monitor.height * scale, "c_run")
+      .sprite(this.monitor.x+15, this.monitor.y + this.monitor.height * scale+15, "c_run")
       .setOrigin(0)
       .setInteractive()
       .setScale(0.8);

@@ -30,8 +30,7 @@
 
       <!-- center area -->
       <div v-if="lessonNavigator" class="lesson-navigator">
-        <!-- left-arrow -->
-        <img class="arrow-left" src="@/assets/svg/arrow-left.svg" alt>
+        
         <router-link
           :to="'/lessons/'+lessonPage"
           v-if="onLessonPage"
@@ -42,6 +41,8 @@
           v-else
           class="lesson-navigator-button notselected"
         >เนื้อหาบทเรียน</router-link>
+        <!-- left-arrow -->
+        <img class="arrow-left" src="@/assets/svg/arrow-left.svg" alt>
 
         <router-link
           :key="page"

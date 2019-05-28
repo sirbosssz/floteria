@@ -132,7 +132,7 @@ export default {
     }
   },
   beforeDestroy() {
-    storage = null;
+    storage.exerciseData.command = []
     this.app.destroy(true);
     console.clear();
     console.log(

@@ -34,6 +34,26 @@ export default class LessonOutput extends Scene {
       )
       .setOrigin(0)
       .setInteractive();
+    // this.step = this.add
+    //   .sprite(
+    //     this.parent.x + 30 + this.run.width,
+    //     this.parent.y + 15 + this.monitor.height * this.monitorScale + 10,
+    //     "c_step"
+    //   )
+    //   .setOrigin(0)
+    //   .setInteractive();
+
+    this.currentCommand = this.add
+    .text(
+      this.parent.x + 15,
+      this.parent.y + 15 + this.monitor.height * this.monitorScale + 10 + this.run.height,
+      'current command:',
+      {
+        font: "bold 12pt Quark",
+        color: "#383838",
+      }
+    )
+    .setOrigin(0);
 
     this.flowIndex = 0;
     this.caseIndex = 0;
@@ -66,6 +86,7 @@ export default class LessonOutput extends Scene {
       }
       const block = storage.flow[this.flowIndex];
     });
+    
   }
 
   runCommand(block) {
@@ -74,11 +95,14 @@ export default class LessonOutput extends Scene {
     if (block.type === "start") {
       console.log("start");
       this.commandStart(block);
+      this.currentCommand.text = 'current command: start'
     } else if (block.type === "end") {
       console.log("end");
       this.commandEnd(block);
+      this.currentCommand.text = 'current command: end'
     } else if (block.type === "input") {
       console.log("input");
+      this.currentCommand.text = 'current command: input'
       if (block.var === testCase.input) {
         this.commandInput(block);
       } else {
@@ -87,6 +111,7 @@ export default class LessonOutput extends Scene {
       }
     } else if (block.type === "output") {
       console.log("output");
+      this.currentCommand.text = 'current command: output'
       if (block.var === testCase.output) {
         this.commandOutput(block);
       } else {
@@ -94,10 +119,12 @@ export default class LessonOutput extends Scene {
         this.resetCommand();
       }
     } else if (block.type === "operation") {
+      this.currentCommand.text = 'current command: operation'
       console.log("operation");
       this.commandOperation(block);
     } else if (block.type === "condition") {
       console.log("condition");
+      this.currentCommand.text = 'current command: condition'
       if (block.var === testCase.condition) {
         this.commandCondition(block);
       } else {
@@ -116,8 +143,10 @@ export default class LessonOutput extends Scene {
         this.resetCommand();
       } else if (this.var.ออร์เดอร์ === "ของหวาน") {
         this.commandInput(block.yes[0]);
+        this.currentCommand.text = 'current command: condition > input'
       } else {
         this.commandInput(block.no[0]);
+        this.currentCommand.text = 'current command: condition > input'
       }
     }
   }
